@@ -243,7 +243,7 @@ describe('preparación y confirmación de liquidación a farmacias', () => {
 
   it('exporta Excel XML de snapshots con total, ceros, SEPA, concepto uniforme, fecha elegida y texto escapado sin fórmulas', async () => {
     const c=await contexto(),p=await propuesta(c);
-    p.detalles[0].denominacion_farmacia='=1+1 & <C> "ficticio"';p.fecha_pago='2026-10-15';
+    p.detalles[0].denominacion_farmacia='=1+1 & <C> "ficticio"';p.fecha_pago='2026-10-19';
     expect((await confirmar(c,p)).status).toBe(201);
     await pool.query("UPDATE farmacia SET denominacion='Después',cuenta_bancaria=NULL WHERE id=$1",[c.farm.id]);
     const r=await excel(c);expect(r.status).toBe(200);expect(r.headers['content-type']).toMatch(/application\/xml/);
@@ -251,7 +251,7 @@ describe('preparación y confirmación de liquidación a farmacias', () => {
     const xml=r.text;
     for (const encabezado of ['SOE','TITULAR','CUENTA DESTINO','IMPORTE','TIPO TRANSFERENCIA','CONCEPTO','FECHA PAGO','TOTAL']) expect(xml).toContain(encabezado);
     expect(xml).toContain('=1+1 &amp; &lt;C&gt; &quot;ficticio&quot;');expect(xml).not.toContain('ss:Formula');
-    expect(xml).toContain('SEPA');expect(xml).toContain('2026-10-15');
+    expect(xml).toContain('SEPA');expect(xml).toContain('19-10-2026');expect(xml).not.toContain('2026-10-19');
     expect(xml).toContain(Object.values(cuenta()).join(''));
     expect(xml).toContain(`Precintos - Municipio ficticio emisión - ${String(c.mes.mes).padStart(2,'0')}/${String(c.mes.anio).padStart(4,'0')}`);
     expect(xml.match(/ss:Type="Number">100.00/g)).toHaveLength(2);
