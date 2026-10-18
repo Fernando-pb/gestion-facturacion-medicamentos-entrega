@@ -14,6 +14,7 @@ const arrancar = (port, overrides = {}) => {
     DEMO_USERNAME: `prueba-${randomBytes(6).toString('hex')}`,
     DEMO_PASSWORD: randomBytes(24).toString('base64url'),
     APP_ORIGIN: 'http://localhost:3000',
+    TRUST_PROXY_HOPS: '0',
     PORT: String(port),
   };
   for (const [key, value] of Object.entries(overrides)) {
@@ -59,6 +60,7 @@ describe('arranque HTTP sin consultas a la base', () => {
     ['contraseña no válida', { DEMO_PASSWORD: randomBytes(4).toString('base64url') }, 'al menos 12 caracteres'],
     ['sin origen configurado', { APP_ORIGIN: undefined }, 'APP_ORIGIN'],
     ['origen no válido', { APP_ORIGIN: 'https://demo.example.test/ruta' }, 'APP_ORIGIN'],
+    ['confianza indiscriminada en proxy', { TRUST_PROXY_HOPS: 'true' }, 'TRUST_PROXY_HOPS'],
   ])('no inicia sin autenticación válida (%s)', async (_caso, overrides, mensaje) => {
     const { proceso, salida } = arrancar(0, overrides);
     const [codigo] = await once(proceso, 'close');

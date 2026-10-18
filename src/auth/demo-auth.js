@@ -41,6 +41,13 @@ export function serverAuthConfigFromEnv(env = process.env) {
   return demoAuthConfigFromEnv(env);
 }
 
+export function trustProxyFromEnv(env = process.env) {
+  const hops = env.TRUST_PROXY_HOPS ?? '0';
+  if (hops === '0') return false;
+  if (hops === '1') return 1;
+  throw new Error('Configura TRUST_PROXY_HOPS como 0 (directo) o 1 (un proxy de confianza).');
+}
+
 export function createDemoAuth(config) {
   if (!config?.username || !config?.password) throw new Error('Falta configurar la cuenta de demostración.');
 

@@ -70,6 +70,7 @@ En una instalación local nueva, copiar [.env.example](.env.example) a un archiv
 | Variable | Uso y ejemplo no sensible |
 |---|---|
 | `PORT` | Puerto HTTP; predeterminado `3000`. |
+| `TRUST_PROXY_HOPS` | `0` por defecto: acceso directo, sin confiar en cabeceras reenviadas. `1`: confiar solo en el proxy inmediato del despliegue descrito abajo. Otros valores se rechazan al arrancar. |
 | `DB_HOST` | Servidor PostgreSQL; ejemplo `localhost`. |
 | `DB_PORT` | Puerto PostgreSQL; predeterminado `5432`. |
 | `DB_NAME` | Base de desarrollo; ejemplo `gestion_facturacion_medicamentos`. |
@@ -86,6 +87,10 @@ El servidor no arranca si faltan las credenciales de demostración, la contrase�
 Las escrituras, login y logout exigen `Origin` igual a `APP_ORIGIN` (403 si es externa, ausente o `null`). El navegador lo envía en las peticiones actuales; otros clientes HTTP deben incluirlo explícitamente. GET, HEAD y OPTIONS no lo requieren.
 
 La sesión opaca vive en memoria hasta ocho horas; cerrar sesión la invalida. La cookie incluye `HttpOnly` y `SameSite=Lax`, además de `Secure` en producción. El control de intentos limita cinco fallos por IP en 15 minutos, reservando también plazas para verificaciones pendientes. Node.js deriva y verifica la contraseña con `scrypt`. Reiniciar el proceso invalida sesiones y reinicia el limitador: este diseño presupone una sola instancia de demostración.
+
+La cookie se marca `Secure` por la configuración de producción, incluso si la conexión interna del proxy a Node es HTTP; no se retira ese atributo por cabeceras del cliente. `trust proxy` permite interpretar `request.secure` y obtener la IP para el limitador cuando se habilita explícitamente. En desarrollo local HTTP mantener `TRUST_PROXY_HOPS=0` y `NODE_ENV=development`: las cabeceras reenviadas se ignoran y la cookie no lleva `Secure`. `APP_ORIGIN` siempre se compara con el valor configurado, sin reconstruirlo a partir del proxy.
+
+Los errores inesperados de las rutas, incluido el login, devuelven **500 JSON** con `Error interno del servidor.`, sin mensaje original ni traza. El registro del servidor conserva método, módulo, plantilla de ruta, tipo conocido y código técnico acotado; no incluye mensajes arbitrarios, SQL, trazas, URL/query, cuerpos, cabeceras, cookies ni credenciales. Las respuestas funcionales conservan sus mensajes y estados. JSON mal formado devuelve 400; cuerpo excesivo, 413; codificación no admitida, 415, con mensajes genéricos. La configuración documental conserva su mensaje específico de límite de logo. Si una respuesta ya empezó, se cierra la conexión sin añadir detalles internos.
 
 ## Ejecución local y conexión
 
@@ -119,6 +124,7 @@ $env:DB_PORT = '5432'
 $env:DB_NAME = 'gestion_facturacion_medicamentos_test'
 $env:DB_SSL = 'false'
 $env:NODE_ENV = 'test'
+$env:TRUST_PROXY_HOPS = '0'
 npm run db:check
 node --env-file=.env node_modules/vitest/vitest.mjs run --no-file-parallelism
 ```
@@ -189,6 +195,10 @@ El presidente histórico se captura en la primera emisión. Cambiar después el 
 El autor confirma que la aplicación está desplegada en **Render**. **URL pública exacta: pendiente de confirmar e incorporar antes de la entrega.** En esta revisión no se ha comprobado el despliegue, su disponibilidad, sus datos ni sus condiciones de acceso.
 
 El proceso previsto es `npm start` con dependencias instaladas y PostgreSQL preparado. Configurar las variables mediante el gestor privado del alojamiento, `NODE_ENV=production`, `APP_ORIGIN` con el origen HTTPS público exacto y la conexión/TLS exigidos por el proveedor. No hay un procedimiento automatizado de despliegue en el repositorio. La sesión en memoria presupone una instancia y pierde sesiones al reiniciarse; no se afirma qué configuración tiene el servicio actual.
+
+**Proxy de Render:** habilitar `TRUST_PROXY_HOPS=1` para el servicio accesible únicamente mediante el proxy inmediato de Render, que termina TLS y reenvía HTTP al proceso. Esta configuración sigue el ejemplo oficial de [autenticación de Render](https://render.com/articles/how-to-implement-authentication-and-authorization) y su [descripción del acceso a Web Services](https://render.com/docs/web-services). No se habilita automáticamente por `NODE_ENV` ni se usa `trust proxy=true`: solo se toma el salto inmediato, ignorando los prefijos adicionales de `X-Forwarded-For`. Según [Express](https://expressjs.com/en/guide/behind-proxies/), el proxy debe gestionar las cabeceras reenviadas y no puede haber una ruta pública directa al proceso que evite ese salto. Si se añade otro proxy/CDN o cambia esa topología, revisar el límite de confianza antes de habilitarlo; no ampliar el número de saltos por tanteo. En esta revisión no se ha inspeccionado la topología ni las cabeceras reales del servicio.
+
+**Comprobación manual tras desplegar por el autor:** confirmar una sola instancia, las tres variables `NODE_ENV`, `APP_ORIGIN` y `TRUST_PROXY_HOPS`, y el acceso público exclusivamente mediante el proxy esperado. Desde la URL HTTPS, iniciar sesión, abrir una página y una API privadas, recargar y cerrar sesión; comprobar en las herramientas del navegador los atributos `Secure`, `HttpOnly` y `SameSite=Lax` sin copiar el valor de la cookie. Con la cuenta de demostración y tráfico de prueba, verificar desde dos clientes con IP públicas distintas que el bloqueo por cinco fallos de uno no bloquea al otro y que añadir prefijos a `X-Forwarded-For` no lo evita. Confirmar también el rechazo de un `Origin` ajeno; el origen ausente o `null` ya se comprueba en las pruebas locales. No provocar fallos de infraestructura ni interrupciones de la base de producción para comprobar errores: esos casos se cubren con fallos simulados locales. Las pruebas automatizadas del proxy son locales y no certifican Render.
 
 Las **credenciales de evaluación se facilitarán mediante el formulario de entrega o un canal privado**. No se publican contraseñas. Antes de entregar, verificar URL, login, conexión de la aplicación, recorrido de demostración y descarga/impresión en el despliegue, sin suponer condiciones de disponibilidad no comprobadas.
 
