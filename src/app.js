@@ -9,12 +9,16 @@ import entregaRoutes from './entregas/entrega.routes.js';
 import facturacionRoutes from './facturacion/facturacion.routes.js';
 import configuracionFacturacionRoutes from './configuracion-facturacion/configuracion.routes.js';
 import { documentosRouter, configuracionRouter } from './documentos/documentos.routes.js';
-import { createDemoAuth, demoAuthConfigFromEnv } from './auth/demo-auth.js';
+import { createDemoAuth, demoAuthConfigFromEnv, trustProxyFromEnv } from './auth/demo-auth.js';
+import { handleHttpError } from './http-errors.js';
 
 const publicDirectory = resolve(dirname(fileURLToPath(import.meta.url)), '../public');
 
-export function createApp({ authConfig = demoAuthConfigFromEnv() } = {}) {
+export function createApp({ authConfig = demoAuthConfigFromEnv(), trustProxy = trustProxyFromEnv() } = {}) {
   const app = express();
+  // Opt-in limitado al proxy inmediato. Nunca confiar en toda la cadena reenviada.
+  if (trustProxy !== false && trustProxy !== 1) throw new Error('La confianza en proxy debe ser false o un salto.');
+  app.set('trust proxy', trustProxy);
   const auth = authConfig ? createDemoAuth(authConfig) : null;
   if (auth) app.use(auth.originMiddleware);
   // Comprobar sesión antes del router y de su parser específico para el logo en Base64.
@@ -46,12 +50,7 @@ export function createApp({ authConfig = demoAuthConfigFromEnv() } = {}) {
   app.use('/facturaciones', documentosRouter);
   app.use(express.static(publicDirectory));
 
-  app.use((error, request, response, next) => {
-    if (error?.type === 'entity.parse.failed' && error.status === 400) {
-      return response.status(400).json({ error: 'JSON no válido.' });
-    }
-    return next(error);
-  });
+  app.use(handleHttpError);
 
   return app;
 }

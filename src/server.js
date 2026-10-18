@@ -1,10 +1,13 @@
-import { serverAuthConfigFromEnv } from './auth/demo-auth.js';
+import { serverAuthConfigFromEnv, trustProxyFromEnv } from './auth/demo-auth.js';
 
 const requestedPort = Number.parseInt(process.env.PORT ?? '3000', 10);
 let authConfig;
+let trustProxy;
 
 try {
-  authConfig = serverAuthConfigFromEnv();
+  const configuredAuth = serverAuthConfigFromEnv();
+  trustProxy = trustProxyFromEnv();
+  authConfig = configuredAuth;
 } catch (error) {
   console.error(`No se puede iniciar el servidor: ${error.message}`);
   process.exitCode = 1;
@@ -12,7 +15,7 @@ try {
 
 if (authConfig) {
   const { createApp } = await import('./app.js');
-  const app = createApp({ authConfig });
+  const app = createApp({ authConfig, trustProxy });
 
   // Express 5 entrega también los errores de listen a este callback.
   const server = app.listen(requestedPort, (error) => {
