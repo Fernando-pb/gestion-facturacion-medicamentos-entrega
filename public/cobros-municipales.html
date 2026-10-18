@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cobros y liquidaciones</title>
+  <link rel="stylesheet" href="/css/ayuntamientos.css">
+  <link rel="stylesheet" href="/css/cobros-municipales.css">
+</head>
+<body><main id="pantalla-cobros">
+  <header class="page-header page-header-with-link"><div><p class="eyebrow">Facturación municipal</p><h1>Cobros y liquidaciones</h1></div><a id="inicio-cobros" class="button button-secondary" href="/">Volver al inicio</a></header>
+  <p id="contexto-cobros"></p>
+  <p id="estado-cobros" role="status" aria-live="polite"></p>
+  <p id="error-cobros" class="operation-message message-error" role="alert" hidden></p>
+  <button id="recuperar-cobro" class="button button-secondary" type="button" hidden>Consultar estado antes de continuar</button>
+  <section id="paso-consulta" class="panel paso-cobros" aria-labelledby="titulo-consulta">
+    <h2 id="titulo-consulta" tabindex="-1">Facturaciones emitidas</h2>
+    <p>Selecciona una facturación para consultar sus cobros y su liquidación a farmacias.</p>
+    <div class="form-grid">
+      <div class="form-field"><label for="ayuntamiento-filtro">Buscar Ayuntamiento</label><input id="ayuntamiento-filtro" type="search" placeholder="Descripción del Ayuntamiento"></div>
+      <div class="form-field"><label for="periodo-filtro">Periodo facturado</label><select id="periodo-filtro"><option value="">Todos los periodos</option></select></div>
+      <div class="form-field"><label for="estado-cobro-filtro">Estado conjunto de cobro</label><select id="estado-cobro-filtro"><option value="">Todos los estados</option><option value="pendiente">Pendiente</option><option value="parcial">Parcial</option><option value="cobrada">Cobrada</option></select></div>
+    </div>
+    <button id="reintentar-listado" class="button button-secondary" type="button" hidden>Reintentar carga</button>
+    <p id="estado-listado" role="status" aria-live="polite"></p>
+    <div class="table-scroll" role="region" aria-label="Facturaciones emitidas" tabindex="0"><table id="tabla-cobros" hidden><thead><tr><th scope="col">Periodo facturado</th><th scope="col">Ayuntamiento</th><th scope="col">Facturas municipales</th><th scope="col">Estado conjunto del cobro</th><th scope="col">Fecha prevista de liquidación a farmacias</th><th scope="col">Acción</th></tr></thead><tbody id="filas-cobros"></tbody></table></div>
+  </section>
+  <section id="paso-facturas" class="panel paso-cobros" aria-labelledby="titulo-facturas" hidden>
+    <h2 id="titulo-facturas" tabindex="-1">Cobros recibidos del Ayuntamiento</h2>
+    <p>PRECINTOS y COMISIÓN se cobran por separado. Cada factura admite un único cobro por su importe completo.</p>
+    <p id="bloqueo-reapertura" class="aviso-reapertura" role="status"></p>
+    <div id="tarjetas-facturas"></div>
+    <div class="form-actions"><button id="cambiar-facturacion-cobros" class="button button-secondary" type="button">Volver al listado</button></div>
+  </section>
+  <section id="seccion-liquidacion" class="panel paso-cobros" aria-labelledby="titulo-liquidacion" hidden>
+    <h2 id="titulo-liquidacion">Liquidación a farmacias</h2>
+    <p>La confirmación conserva el lote y permite preparar el archivo para Contabilidad. La aplicación no ejecuta ni comprueba transferencias.</p>
+    <p id="estado-liquidacion" role="status" aria-live="polite"></p>
+    <button id="preparar-liquidacion" class="button button-primary" type="button" hidden>Preparar liquidación conjunta</button>
+    <form id="formulario-liquidacion" hidden>
+      <div class="form-field"><label for="fecha-liquidacion">Fecha de liquidación</label><input id="fecha-liquidacion" type="date" min="0001-01-01" max="9999-12-31" required aria-describedby="ayuda-fecha-liquidacion"></div>
+      <p id="ayuda-fecha-liquidacion">Se propone el siguiente día de lunes a viernes después del cobro de PRECINTOS, sin considerar festivos. Puedes editarlo antes de confirmar.</p>
+      <div id="detalles-liquidacion"></div>
+      <label class="confirmacion-cobro"><input id="confirmacion-liquidacion" type="checkbox" required> He revisado todos los titulares, cuentas, importes completos y la fecha del lote.</label>
+      <div class="form-actions"><button id="cancelar-liquidacion" class="button button-secondary" type="button">Cancelar revisión</button><button id="guardar-liquidacion" class="button button-primary" type="submit" disabled>Confirmar liquidación conjunta</button></div>
+    </form>
+    <div id="liquidacion-confirmada" hidden></div>
+    <a id="exportar-liquidacion" class="button button-secondary" hidden>Descargar Excel XML para Contabilidad</a>
+  </section>
+  <section id="paso-registro" class="panel paso-cobros" aria-labelledby="titulo-registro" hidden>
+    <h2 id="titulo-registro" tabindex="-1">Registrar cobro completo</h2>
+    <p id="factura-seleccionada-cobro"></p>
+    <form id="formulario-registro-cobro">
+      <div class="form-grid">
+        <div class="form-field"><label for="importe-cobro">Importe completo (€)</label><input id="importe-cobro" type="text" readonly aria-describedby="ayuda-importe-cobro"></div>
+        <div class="form-field"><label for="fecha-cobro">Fecha de cobro</label><input id="fecha-cobro" type="date" min="0001-01-01" max="9999-12-31" required></div>
+        <div class="form-field form-field-wide"><label for="justificante-cobro">Referencia del justificante (opcional)</label><input id="justificante-cobro" type="text"></div>
+      </div>
+      <p id="ayuda-importe-cobro">El importe es el total de la factura. No se admiten cobros parciales ni superiores.</p>
+      <label class="confirmacion-cobro"><input id="confirmacion-cobro" type="checkbox" required> Confirmo el cobro completo. Cualquier cobro bloquea la reapertura de toda esta facturación.</label>
+      <div class="form-actions"><button id="cancelar-cobro" class="button button-secondary" type="button">Volver a las facturas</button><button id="guardar-cobro" class="button button-primary" type="submit">Registrar cobro completo</button></div>
+    </form>
+  </section>
+</main><script type="module" src="/js/cobros-municipales.js"></script></body>
+</html>

@@ -1,0 +1,118 @@
+.entregas-page { min-width: 0; --margen-pagina: clamp(1rem, 3vw, 2rem); --margen-lecturas: clamp(.75rem, 2vw, 1.5rem); }
+.entregas-page main { width: min(calc(100% - 2 * var(--margen-pagina)), 72rem); margin-inline: auto; }
+/* Compensar el borde de 1 px de .panel al alinear el título con su contenido. */
+.entregas-page .page-header { padding-inline: calc(var(--margen-lecturas) + 1px); }
+.datos-entrega { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin: 1.5rem; }
+.datos-entrega div { min-width: 0; }
+#listado-entregas { --margen-listado: 1.5rem; }
+#listado-entregas .section-heading { padding-inline: var(--margen-listado); }
+#grupos-entregas { margin: 0 var(--margen-listado) 1.5rem; }
+#grupos-entregas section + section { margin-top: 1.5rem; }
+#grupos-entregas h3 { margin: 0 0 .75rem; overflow-wrap: anywhere; }
+#grupos-entregas table { min-width: 56rem; }
+#grupos-entregas th:nth-child(1), #grupos-entregas td:nth-child(1) { width: 8%; }
+#grupos-entregas th:nth-child(2), #grupos-entregas td:nth-child(2) { width: 40%; }
+#grupos-entregas th:nth-child(3), #grupos-entregas td:nth-child(3) { width: 12%; }
+#grupos-entregas th:nth-child(4), #grupos-entregas td:nth-child(4) { width: 20%; }
+#grupos-entregas th:nth-child(5), #grupos-entregas td:nth-child(5) { width: 20%; }
+#grupos-entregas td { overflow-wrap: anywhere; }
+#grupos-entregas td:nth-child(3), #grupos-entregas td:nth-child(4) { font-weight: 700; white-space: nowrap; font-variant-numeric: tabular-nums; }
+#grupos-entregas th:nth-child(4), #grupos-entregas td:nth-child(4) { text-align: right; }
+#grupos-entregas .button { max-width: 100%; white-space: normal; }
+.mensaje-listado { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem; padding-inline: var(--margen-listado); margin-block: 1rem; }
+.mensaje-listado .operation-message { margin: 0; padding-inline: 0; }
+.filtros-entregas-listado { grid-template-columns: repeat(2, minmax(12rem, 1fr)); padding-inline: var(--margen-listado); }
+@media (max-width: 40rem) { #listado-entregas { --margen-listado: 1rem; } }
+.datos-entrega dt { color: #354a60; font-weight: 650; }
+.datos-entrega dd { margin: .35rem 0 0; overflow-wrap: anywhere; }
+#contexto, #estado, #aviso-periodo { overflow-wrap: anywhere; }
+.nota-entrega { margin: 1.5rem; }
+#formulario-declarados { margin-top: 1.5rem; }
+#consultar-guardado, #reintentar-carga { margin-bottom: 1rem; }
+.resumen-entrega { margin: 1.5rem; padding: 1.25rem; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem 1.5rem; background: #edf5fb; border: 1px solid #9aafc5; border-radius: .5rem; }
+.resumen-entrega h3, .resumen-entrega p, .resumen-entrega button { grid-column: 1 / -1; margin: 0; }
+.resumen-entrega strong { display: block; font-size: 1.8rem; overflow-wrap: anywhere; }
+.control-entrega { margin: 1.5rem; padding: 1rem; border: 1px solid #b6c3d0; border-radius: .5rem; }
+.control-entrega > summary { cursor: pointer; font-weight: 700; }
+.control-entrega .datos-entrega { margin: 1rem 0; }
+@media (max-width: 40rem) { .resumen-entrega { grid-template-columns: 1fr; } }
+[aria-disabled="true"] { opacity: .65; }
+.button:disabled { cursor: not-allowed; }
+#abrir:disabled[aria-busy="true"] { cursor: wait; }
+.aviso-apertura { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+.selector-farmacias-contenido { min-width: 0; margin: 0 1.5rem; }
+.selector-farmacias-contenido > * { max-width: 100%; box-sizing: border-box; }
+.selector-farmacias-contenido input { min-width: 0; }
+.selector-farmacias-contenido .form-field { margin-bottom: 1rem; }
+.selector-farmacias-contenido #estado-busqueda { margin-bottom: 1rem; overflow-wrap: anywhere; }
+.selector-farmacias-contenido #reintentar-carga { margin-bottom: 0; }
+.resultados-farmacias { margin: 0; padding: 0; list-style: none; max-height: 20rem; overflow-y: auto; border: 1px solid #9aafc5; border-radius: .4rem; }
+.resultados-farmacias li { padding: .8rem 1rem; border-bottom: 1px solid #d9e1ea; cursor: pointer; overflow-wrap: anywhere; }
+.resultados-farmacias li:hover, .resultados-farmacias li[aria-selected="true"] { background: #edf5fb; outline: 2px solid #1468b3; outline-offset: -2px; }
+.farmacia-seleccionada { margin: 0; font-weight: 650; overflow-wrap: anywhere; }
+@media (max-width: 40rem) { .datos-entrega { grid-template-columns: 1fr; } }
+@media (max-width: 40rem) { .filtros-entregas-listado { grid-template-columns: 1fr; } }
+.resumen-entrega > div { min-width: 0; }
+.resumen-principal #reintentar-lecturas { grid-column: 1 / -1; justify-self: start; }
+html:has(#lecturas:not([hidden])) { scrollbar-gutter: stable both-edges; }
+#lecturas { overflow: visible; }
+#lecturas .section-heading { padding-inline: var(--margen-lecturas); }
+#sin-precintos-lecturas { margin-inline: var(--margen-lecturas); }
+.estado-precios { margin: 1rem var(--margen-lecturas); overflow-wrap: anywhere; }
+.estado-precios p { margin: .5rem 0; }
+#lecturas > .form-actions { padding-inline: var(--margen-lecturas); }
+#decision-lectura { padding-inline: var(--margen-lecturas); }
+#decision-lectura .form-actions { padding-inline: 0; }
+.cabecera-lecturas { position: sticky; top: 0; z-index: 2; background: #fff; }
+.lista-lecturas { width: auto; margin-inline: var(--margen-lecturas); max-height: 20rem; overflow: auto; scroll-padding-block-start: 5rem; scrollbar-gutter: stable; }
+.tabla-lecturas { width: 100%; min-width: 0; table-layout: fixed; }
+.tabla-lecturas thead { position: sticky; top: 0; z-index: 4; background: #f7f9fc; box-shadow: 0 1px 0 #b6c3d0; }
+.tabla-lecturas .col-paquete, .tabla-lecturas .col-posicion { width: 4rem; }
+.tabla-lecturas .col-codigo { width: 10rem; }
+.tabla-lecturas .col-acciones { width: 13rem; }
+.tabla-lecturas th, .tabla-lecturas td { width: auto; padding: .75rem .625rem; }
+.tabla-lecturas td { white-space: normal; overflow-wrap: anywhere; vertical-align: middle; }
+.tabla-lecturas td:nth-child(3), .tabla-lecturas td:nth-child(4) { font-variant-numeric: tabular-nums; }
+.tabla-lecturas th:nth-child(4), .tabla-lecturas td:nth-child(4) { text-align: left; }
+.tabla-lecturas th:nth-child(5), .tabla-lecturas td:nth-child(5) { text-align: right; font-variant-numeric: tabular-nums; }
+.entrada-lectura { padding: 1rem var(--margen-lecturas) .5rem; }
+.detalles-lecturas { margin: 0 var(--margen-lecturas) 1.5rem; padding: 1rem 0; }
+.detalles-lecturas .datos-entrega { margin: 1rem 0; }
+.detalles-lecturas ul { padding-inline-start: 1.25rem; }
+.entrada-lectura .form-actions { padding: .75rem 0; flex-wrap: wrap; }
+.entrada-lectura label { font-size: 1rem; font-weight: 700; }
+.paquete-control { display: flex; align-items: flex-start; gap: .85rem; margin: 0 0 .5rem; }
+.button-paquete { flex: 0 1 auto; max-width: 22rem; padding: .5rem .75rem; font-size: .92rem; line-height: 1.35; text-align: left; white-space: normal; }
+.paquete-control p { flex: 1 1 18rem; min-width: 0; margin: .35rem 0 0; color: #536a82; font-size: .92rem; line-height: 1.45; overflow-wrap: anywhere; }
+#estado-lectura { margin: 0 0 .5rem; padding-inline: var(--margen-lecturas); }
+#contexto-lecturas, #estado-lectura, #resultado-lectura { overflow-wrap: anywhere; }
+.correccion-precio { margin: 1rem var(--margen-lecturas); padding: 1rem; border: 1px solid #9aafc5; border-radius: .5rem; }
+#lecturas:has(#formulario-precio:not([hidden])) .cabecera-lecturas,
+#lecturas:has(#formulario-eliminar:not([hidden])) .cabecera-lecturas,
+#lecturas:has(.acciones-precio) .cabecera-lecturas,
+#lecturas:has(.ultima-lectura) .cabecera-lecturas { position: static; }
+.correccion-precio p { overflow-wrap: anywhere; }
+.correccion-precio .form-actions { padding: 1rem 0 0; flex-wrap: wrap; }
+.confirmacion-precio { display: flex; align-items: center; gap: .65rem; }
+.confirmacion-precio input { width: auto; }
+.tabla-lecturas .acciones-precio { display: flex; flex-wrap: nowrap; align-items: center; gap: .35rem; }
+.tabla-lecturas .acciones-precio .button { align-self: center; }
+.tabla-lecturas .corregir-precio { flex: 0 1 auto; max-width: 100%; padding-inline: .625rem; white-space: nowrap; }
+.tabla-lecturas .eliminar-precinto { flex: 0 0 2.5rem; width: 2.5rem; min-height: 2.5rem; padding: .35rem; font-size: 1.2rem; line-height: 1; }
+.tabla-lecturas tr.ultima-lectura { background: #e4f4e9; outline: 2px solid #267b42; outline-offset: -2px; }
+.detalles-lecturas summary { cursor: pointer; font-weight: 650; }
+#codigo-lectura { font-size: 1.25rem; font-weight: 600; letter-spacing: .035em; font-variant-numeric: tabular-nums; }
+@media (max-width: 40rem) { .paquete-control { flex-direction: column; gap: .5rem; } .button-paquete { max-width: 100%; } }
+@media (max-width: 44rem) {
+  .lista-lecturas { max-height: 24rem; }
+  .tabla-lecturas, .tabla-lecturas tbody { display: block; }
+  .tabla-lecturas caption { display: block; position: sticky; top: 0; z-index: 4; padding: .5rem .75rem; background: #fff; box-shadow: 0 1px 0 #b6c3d0; }
+  .tabla-lecturas colgroup { display: none; }
+  .tabla-lecturas thead { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .tabla-lecturas tr { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: .5rem .75rem; padding: .25rem; border: 1px solid #b6c3d0; border-radius: .4rem; }
+  .tabla-lecturas td { display: block; min-width: 0; width: auto; border: 0; padding: .25rem .5rem; }
+  .tabla-lecturas td::before { content: attr(data-label); display: block; margin-bottom: .25rem; color: #40566d; font-weight: 650; }
+  .tabla-lecturas td:nth-child(n+3) { grid-column: 1 / -1; }
+  .tabla-lecturas td:nth-child(4), .tabla-lecturas td:nth-child(5) { text-align: left; }
+  .tabla-lecturas td:nth-child(6) { background: transparent; }
+}

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de facturación de medicamentos</title>
+    <link rel="stylesheet" href="/css/ayuntamientos.css">
+    <link rel="stylesheet" href="/css/inicio.css">
+  </head>
+  <body>
+    <main>
+      <header class="page-header">
+        <p class="eyebrow">Gestión de facturación de medicamentos</p>
+        <h1>Inicio</h1>
+        <p class="home-intro">Selecciona una función para continuar.</p>
+        <button id="logout" class="button button-secondary" type="button">Cerrar sesión</button>
+      </header>
+
+      <section class="panel home-panel" aria-labelledby="titulo-funciones">
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-funciones">Funciones disponibles</h2>
+            <p class="section-description">Elige una sección para acceder a sus funciones.</p>
+          </div>
+        </div>
+        <div class="municipal-tabs home-tabs" role="tablist" aria-label="Secciones de Inicio" aria-orientation="horizontal">
+          <button id="tab-diaria" class="button button-secondary" type="button" role="tab" aria-selected="true" aria-controls="panel-diaria" tabindex="0">Gestión diaria</button>
+          <button id="tab-maestros" class="button button-secondary" type="button" role="tab" aria-selected="false" aria-controls="panel-maestros" tabindex="-1">Datos maestros</button>
+          <button id="tab-informes" class="button button-secondary" type="button" role="tab" aria-selected="false" aria-controls="panel-informes" tabindex="-1">Informes</button>
+          <button id="tab-configuracion" class="button button-secondary" type="button" role="tab" aria-selected="false" aria-controls="panel-configuracion" tabindex="-1">Configuración</button>
+        </div>
+        <section id="panel-diaria" role="tabpanel" aria-labelledby="tab-diaria" tabindex="0">
+          <ul class="home-links">
+            <li>
+              <a class="home-link" href="/entregas.html">
+                <span class="home-link-title">Entregas y precintos</span>
+                <span class="home-link-description">Abrir una entrega y consultar sus declarados y resumen.</span>
+              </a>
+            </li>
+            <li><a class="home-link" href="/facturacion-municipal.html"><span class="home-link-title">Facturación municipal</span><span class="home-link-description">Consultar facturaciones emitidas y sus documentos, o iniciar una nueva facturación.</span></a></li>
+            <li><a class="home-link" href="/cobros-municipales.html"><span class="home-link-title">Cobros y liquidaciones</span><span class="home-link-description">Consultar cobros del Ayuntamiento y preparar liquidaciones a farmacias.</span></a></li>
+          </ul>
+        </section>
+        <section id="panel-maestros" role="tabpanel" aria-labelledby="tab-maestros" tabindex="0" hidden>
+          <ul class="home-links">
+            <li>
+              <a class="home-link" href="/ayuntamientos.html">
+                <span class="home-link-title">Ayuntamientos</span>
+                <span class="home-link-description">Consultar y gestionar ayuntamientos.</span>
+              </a>
+            </li>
+            <li>
+              <a class="home-link" href="/farmacias.html">
+                <span class="home-link-title">Farmacias</span>
+                <span class="home-link-description">Consultar y gestionar farmacias y su ayuntamiento asociado.</span>
+              </a>
+            </li>
+            <li>
+              <a class="home-link" href="/medicamentos.html">
+                <span class="home-link-title">Medicamentos</span>
+                <span class="home-link-description">Consultar y gestionar el catálogo de medicamentos.</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+        <section id="panel-informes" role="tabpanel" aria-labelledby="tab-informes" tabindex="0" hidden>
+          <ul class="home-links">
+            <li><a class="home-link" href="/informe-anual.html"><span class="home-link-title">Informe anual de precintos</span><span class="home-link-description">Ver importes trimestrales o exportar a Excel.</span></a></li>
+          </ul>
+        </section>
+        <section id="panel-configuracion" role="tabpanel" aria-labelledby="tab-configuracion" tabindex="0" hidden>
+          <ul class="home-links">
+            <li><a class="home-link" href="/configuracion-facturacion.html"><span class="home-link-title">Comisión e IVA</span><span class="home-link-description">Gestionar porcentajes y fechas de vigencia para gastos de facturación.</span></a></li>
+          </ul>
+        </section>
+      </section>
+    </main>
+    <script type="module" src="/js/inicio.js"></script>
+    <script type="module" src="/js/logout.js"></script>
+  </body>
+</html>

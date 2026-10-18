@@ -1,0 +1,635 @@
+body {
+  margin: 0;
+  min-width: 20rem;
+  background: #f3f6fa;
+  color: #182536;
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  width: min(100% - 2rem, 76rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 4rem;
+}
+
+.page-header {
+  margin-bottom: 1.5rem;
+}
+
+.page-header-with-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-header-with-link > div {
+  min-width: 0;
+}
+
+.eyebrow {
+  margin: 0 0 0.35rem;
+  color: #536a82;
+  font-size: 0.875rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+}
+
+.panel {
+  overflow: hidden;
+  border: 1px solid #d9e1ea;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 0.25rem 1rem rgb(24 37 54 / 5%);
+}
+
+.form-panel {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.5rem;
+}
+
+.operation-message,
+.form-status {
+  margin: 0 0 1rem;
+  padding: 0.75rem 1rem;
+  border-radius: 0.4rem;
+}
+
+.operation-message {
+  border: 1px solid transparent;
+}
+
+.form-status {
+  margin: 0 1.5rem 1rem;
+  padding-right: 0;
+  padding-left: 0;
+  color: #354a60;
+}
+
+.message-success {
+  border-color: #6b9f72;
+  background: #edf7ee;
+  color: #205b2e;
+}
+
+.message-error {
+  border-color: #c76565;
+  background: #fff0f0;
+  color: #7a1f1f;
+}
+
+.form-status.message-error {
+  padding: 0.75rem 1rem;
+  border: 1px solid #c76565;
+  border-radius: 0.4rem;
+}
+
+.list-status.message-error {
+  margin: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid #c76565;
+  border-radius: 0.4rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0 1.5rem;
+}
+
+.medicamento-identificacion {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(12rem, 0.35fr) minmax(0, 1fr);
+  gap: 1rem;
+  min-width: 0;
+}
+
+.form-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-field-wide {
+  grid-column: 1 / -1;
+}
+
+.form-field label {
+  color: #354a60;
+  font-size: 0.92rem;
+  font-weight: 650;
+}
+
+.form-field input,
+.form-field select {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #9aafc5;
+  border-radius: 0.35rem;
+  background: #fff;
+  color: #182536;
+  font: inherit;
+}
+
+.medicamento-identificacion .form-field input,
+.medicamento-identificacion .form-field select {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.form-field input:focus-visible,
+.form-field select:focus-visible {
+  outline: 3px solid #1468b3;
+  outline-offset: 2px;
+}
+
+.form-field input:disabled,
+.form-field select:disabled {
+  background: #eef2f6;
+  color: #536579;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1.5rem 1.5rem 0;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.5rem 1.5rem 0.5rem;
+}
+
+.heading-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+h2 {
+  margin-bottom: 0.35rem;
+  font-size: 1.25rem;
+}
+
+.section-description {
+  margin-bottom: 0;
+  color: #536579;
+}
+
+.list-status {
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0.75rem 1.5rem;
+  color: #354a60;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  box-sizing: border-box;
+  line-height: 1.25;
+  text-decoration: none;
+  min-height: 2.75rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.4rem;
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.button-secondary {
+  border-color: #9aafc5;
+  background: #fff;
+  color: #173c63;
+}
+
+.button-primary {
+  background: #174f7e;
+  color: #fff;
+}
+
+.button-primary:hover {
+  background: #103c61;
+}
+
+.button:disabled {
+  cursor: wait;
+  opacity: 0.65;
+}
+
+.row-actions {
+  display: flex;
+  align-items: center;
+  min-width: 10rem;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+}
+
+.row-actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.4rem;
+  padding: 0.4rem 0.65rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.button-secondary:hover {
+  background: #edf4fa;
+}
+
+.button:focus-visible {
+  outline: 3px solid #1468b3;
+  outline-offset: 3px;
+}
+
+.table-scroll {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+table {
+  width: 100%;
+  min-width: 74rem;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  text-align: left;
+}
+
+.medicamentos-table-scroll {
+  overflow: visible;
+}
+
+.medicamentos-table {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.medicamentos-table th:nth-child(1),
+.medicamentos-table td:nth-child(1) {
+  width: 13%;
+}
+
+.medicamentos-table th:nth-child(2),
+.medicamentos-table td:nth-child(2) {
+  width: 27%;
+}
+
+.medicamentos-table th:nth-child(3),
+.medicamentos-table td:nth-child(3) {
+  width: 10%;
+}
+
+.medicamentos-table th:nth-child(4),
+.medicamentos-table td:nth-child(4) {
+  width: 15%;
+}
+
+.medicamentos-table th:nth-child(5),
+.medicamentos-table td:nth-child(5) {
+  width: 14%;
+}
+
+.medicamentos-table th:nth-child(6),
+.medicamentos-table td:nth-child(6) {
+  width: 8%;
+}
+
+.medicamentos-table th:nth-child(7),
+.medicamentos-table td:nth-child(7) {
+  width: 13%;
+  position: static;
+  right: auto;
+  z-index: auto;
+  box-shadow: none;
+}
+
+.medicamentos-table td {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.medicamentos-table td:first-child {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.medicamentos-table .button {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+th:nth-child(1),
+td:nth-child(1) {
+  width: 13%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  width: 21%;
+}
+
+th:nth-child(3),
+td:nth-child(3),
+th:nth-child(4),
+td:nth-child(4) {
+  width: 12%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+  width: 10%;
+}
+
+th:nth-child(6),
+td:nth-child(6) {
+  width: 13%;
+}
+
+th:nth-child(7),
+td:nth-child(7) {
+  width: 19%;
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  box-shadow: -0.6rem 0 0.8rem -0.7rem rgb(24 37 54 / 35%);
+}
+
+th,
+td {
+  padding: 0.9rem 1rem;
+  border-top: 1px solid #e2e8ef;
+  vertical-align: top;
+}
+
+th {
+  background: #f7f9fc;
+  color: #40566d;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: normal;
+  overflow-wrap: normal;
+}
+
+td {
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+td:nth-child(2),
+td:nth-child(3),
+td:nth-child(4) {
+  white-space: normal;
+}
+
+th:first-child,
+td:first-child {
+  white-space: nowrap;
+}
+
+th:last-child {
+  z-index: 3;
+  background: #f7f9fc;
+}
+
+tbody td:last-child {
+  background: #fff;
+}
+
+td:last-child {
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: #f8fbfe;
+}
+
+tbody tr:hover td:last-child {
+  background: #f8fbfe;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 40rem) {
+  main {
+    width: min(100% - 1.25rem, 76rem);
+    padding-top: 1.5rem;
+  }
+
+  .section-heading {
+    flex-direction: column;
+    padding: 1.1rem 1rem 0.5rem;
+  }
+
+  .page-header-with-link {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .form-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .medicamento-identificacion {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .form-field-wide {
+    grid-column: auto;
+  }
+
+  .form-status {
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+
+  .form-actions {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .list-status {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  th,
+  td {
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 48rem) {
+  .medicamentos-table,
+  .medicamentos-table tbody {
+    display: block;
+  }
+
+  .medicamentos-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .medicamentos-table tr {
+    display: block;
+    width: calc(100% - 2rem);
+    margin: 0.75rem 1rem;
+    overflow: hidden;
+    border: 1px solid #d9e1ea;
+    border-radius: 0.5rem;
+    background: #fff;
+  }
+
+  .medicamentos-table tr > td:nth-child(n) {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem;
+    border-top: 1px solid #e2e8ef;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .medicamentos-table tr > td:first-child {
+    border-top: 0;
+  }
+
+  .medicamentos-table td::before {
+    flex: 0 0 8rem;
+    color: #40566d;
+    font-weight: 700;
+    content: attr(data-label);
+  }
+
+  .medicamentos-table td.medicamentos-actions-cell {
+    align-items: center;
+    background: #f7f9fc;
+  }
+
+  .medicamentos-table td.medicamentos-actions-cell .button {
+    flex: 0 1 auto;
+  }
+}
+
+/* Tablas municipales: desplazamiento contenido en pantallas pequeñas. */
+.municipal-task {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #d9e1ea;
+  border-radius: 0.5rem;
+}
+.municipal-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.municipal-tabs [aria-selected="true"] {
+  color: #fff;
+  background: #215779;
+}
+#datos-ficha dt { color: #40566d; font-weight: 700; }
+#datos-ficha dd { margin: 0.25rem 0 0.75rem; overflow-wrap: anywhere; }
+.municipal-selection {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #edf5fb;
+  border-radius: 0.5rem;
+  overflow-wrap: anywhere;
+}
+.municipal-table, .farmacias-municipales-table { min-width: 52rem; }
+.confirmacion-farmacia { margin: 1rem 1.5rem; padding: 1rem; border: 1px solid #9aafc5; border-radius: 0.4rem; background: #edf4fa; }
+.confirmacion-farmacia p { overflow-wrap: anywhere; }
+.municipal-table, .farmacias-municipales-table { table-layout: auto; }
+.municipal-table th:nth-child(n),
+.municipal-table td:nth-child(n),
+.farmacias-municipales-table th:nth-child(n),
+.farmacias-municipales-table td:nth-child(n) { width: auto; white-space: normal; overflow-wrap: anywhere; }
+.municipal-table .button, .farmacias-municipales-table .button { white-space: nowrap; }
+#tabla-ayuntamientos .row-actions { flex-wrap: wrap; }
+
+.informative-notice {
+  margin: 0.75rem 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid #8baac5;
+  border-radius: 0.4rem;
+  background: #edf5fb;
+  color: #173c63;
+  line-height: 1.5;
+}
+
+/* La ficha comparte un único margen interior, sin sumar el de sus componentes. */
+#ficha-ayuntamiento { padding: 1.5rem; text-align: left; }
+#ficha-ayuntamiento .section-heading { padding: 0 0 0.5rem; }
+#ficha-ayuntamiento .form-grid { padding: 0; gap: 0.75rem 1rem; }
+#ficha-ayuntamiento .form-actions { padding: 0.75rem 0 0; }
+#ficha-ayuntamiento .municipal-tabs { margin: 0.75rem 0 1rem; }
+#ficha-ayuntamiento .list-status { padding: 0.5rem 0; }
+#ficha-ayuntamiento .form-status { margin: 0.5rem 0; padding: 0.5rem 0; }
+#ficha-ayuntamiento .list-status:empty,
+#ficha-ayuntamiento .form-status:empty { display: none; }
+#ficha-ayuntamiento .message-error { margin: 0.5rem 0; padding: 0.75rem 1rem; }
+#ficha-ayuntamiento .municipal-task { margin: 0.75rem 0 0; padding: 0; border: 0; }
+#ficha-ayuntamiento .municipal-selection,
+#ficha-ayuntamiento .confirmacion-farmacia { margin: 0.75rem 0 0; padding: 1rem; }
+#ficha-ayuntamiento h3 { margin: 0 0 0.5rem; }
+#ficha-ayuntamiento details p { margin: 0.5rem 0; }
+#ficha-ayuntamiento #datos-ficha { margin: 0.75rem 0; }
+#ficha-ayuntamiento #datos-ficha dd { margin-bottom: 0; }
+#ficha-ayuntamiento .table-scroll { margin-bottom: 0.75rem; }
+@media (max-width: 40rem) {
+  #ficha-ayuntamiento { padding: 1rem; }
+}

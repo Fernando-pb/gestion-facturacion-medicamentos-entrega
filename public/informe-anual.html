@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Informe anual de precintos</title>
+  <link rel="stylesheet" href="/css/ayuntamientos.css">
+  <link rel="stylesheet" href="/css/informe-anual.css">
+</head>
+<body><main>
+  <header class="page-header page-header-with-link"><div><h1>Informe anual de precintos</h1>
+    <p>Importes por el trimestre del periodo facturado. No incluye COMISIÓN. Informe operativo sin alcance fiscal.</p></div>
+    <a class="button button-secondary" href="/">Volver al inicio</a></header>
+  <section class="panel form-panel" aria-labelledby="titulo-filtros">
+    <h2 id="titulo-filtros">Seleccionar informe</h2>
+    <form id="formulario-informe">
+      <div class="form-grid">
+        <div class="form-field"><label for="anio-informe">Año</label><input id="anio-informe" type="number" min="1" max="9999" step="1" required></div>
+        <div class="form-field"><label for="ayuntamiento-informe">Ayuntamiento</label><select id="ayuntamiento-informe"><option value="">Todos los Ayuntamientos</option></select></div>
+        <div class="form-field form-field-wide"><label><input id="mensual-informe" type="checkbox"> Incluir desglose por mes</label></div>
+      </div>
+      <div class="form-actions">
+        <button id="ver-informe" class="button button-primary" type="submit">Ver informe</button>
+        <button id="exportar-informe" class="button button-secondary" type="submit" aria-describedby="ayuda-exportar-informe">Exportar a Excel</button>
+      </div>
+      <p id="ayuda-exportar-informe">Se descarga un archivo XML compatible con Excel. Puedes exportarlo directamente, sin mostrar el informe primero.</p>
+    </form>
+    <p id="estado-informe" role="status" aria-live="polite"></p>
+    <p id="error-informe" role="alert" hidden></p>
+  </section>
+  <section id="resultado-informe" class="panel" aria-labelledby="titulo-informe" hidden>
+    <h2 id="titulo-informe" tabindex="-1"></h2>
+    <p id="advertencia-informe" role="status" hidden></p>
+    <p id="total-informe"></p>
+    <p id="sin-actividad-informe" hidden>No hay actividad emitida para esta selección.</p>
+    <div id="grupos-informe"></div>
+  </section>
+</main><script type="module" src="/js/informe-anual.js"></script></body>
+</html>

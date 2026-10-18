@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Facturación municipal</title><link rel="stylesheet" href="/css/ayuntamientos.css"><link rel="stylesheet" href="/css/facturacion-municipal.css"></head>
+<body><main>
+  <header class="page-header page-header-with-link"><div><p class="eyebrow">Facturación de medicamentos</p><h1>Facturación municipal</h1></div><a class="button button-secondary" href="/">Volver al inicio</a></header>
+  <section class="panel paso" aria-labelledby="titulo-listado-facturaciones">
+    <div class="section-heading"><div><h2 id="titulo-listado-facturaciones">Facturaciones emitidas</h2><p>Consulta los documentos de una emisión guardada o inicia una nueva facturación.</p></div><a id="nueva-facturacion" class="button button-primary" href="/facturacion-emision.html">Nueva facturación</a></div>
+    <div class="form-grid">
+      <div class="form-field"><label for="ayuntamiento-filtro">Buscar Ayuntamiento</label><input id="ayuntamiento-filtro" type="search" placeholder="Descripción del Ayuntamiento" aria-describedby="ayuda-filtros"></div>
+      <div class="form-field"><label for="periodo-filtro">Periodo facturado</label><select id="periodo-filtro"><option value="">Todos los periodos</option></select></div>
+      <div class="form-field"><label for="precintos-cobro-filtro">Cobro de Precintos</label><select id="precintos-cobro-filtro"><option value="">Todos</option><option value="pendiente">Pendiente</option><option value="cobrada">Cobrada</option></select></div>
+      <div class="form-field"><label for="comision-cobro-filtro">Cobro de Gastos/Comisión</label><select id="comision-cobro-filtro"><option value="">Todos</option><option value="pendiente">Pendiente</option><option value="cobrada">Cobrada</option></select></div>
+    </div>
+    <p id="ayuda-filtros">Combina el nombre del Ayuntamiento, el periodo y el estado de cobro de cada factura para filtrar las facturaciones emitidas.</p>
+    <button id="reintentar-listado" type="button" class="button button-secondary" hidden>Reintentar carga</button>
+    <p id="estado-listado-facturaciones" role="status" aria-live="polite"></p><p id="error-listado-facturaciones" role="alert"></p>
+    <div id="tabla-facturaciones" class="table-scroll" role="region" aria-label="Facturaciones emitidas" tabindex="0" hidden><table class="tabla-facturaciones" role="table"><thead role="rowgroup"><tr role="row"><th scope="col">Periodo facturado</th><th scope="col">Ayuntamiento</th><th scope="col">PRECINTOS</th><th scope="col">GASTOS/COMISIÓN</th><th scope="col">Acciones</th></tr></thead><tbody id="filas-facturaciones" role="rowgroup"></tbody></table></div>
+    <form id="formulario-reapertura" class="reapertura-facturacion" aria-labelledby="titulo-reapertura" hidden>
+      <h3 id="titulo-reapertura" tabindex="-1">Reabrir facturación municipal</h3>
+      <p id="contexto-reapertura"></p>
+      <p>Se reabre la facturación completa y sus dos facturas, PRECINTOS y COMISIÓN. Se conservan sus números oficiales y documentos hasta la reemisión conjunta. Cualquier cobro impide reabrir.</p>
+      <div class="form-field"><label for="motivo-reapertura">Motivo de reapertura</label><textarea id="motivo-reapertura" maxlength="500" required rows="3"></textarea></div>
+      <label class="confirmacion"><input id="confirmacion-reapertura" type="checkbox" required> Confirmo reabrir esta facturación y sus dos facturas.</label>
+      <div class="form-actions"><button id="confirmar-reapertura" class="button button-primary" type="submit" disabled>Confirmar reapertura</button><button id="cancelar-reapertura" class="button button-secondary" type="button">Cancelar</button></div>
+    </form>
+    <p id="estado-reapertura" role="status" aria-live="polite"></p>
+    <p id="error-reapertura" role="alert"></p>
+    <button id="consultar-reapertura" class="button button-secondary" type="button" hidden>Consultar resultado de reapertura</button>
+    <a id="continuar-reapertura" class="button button-primary" hidden>Continuar revisión y reemisión conjunta</a>
+  </section>
+</main><script type="module" src="/js/facturacion-listado.js"></script></body></html>

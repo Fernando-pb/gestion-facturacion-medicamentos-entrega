@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nueva facturación municipal</title>
+  <link rel="stylesheet" href="/css/ayuntamientos.css">
+  <link rel="stylesheet" href="/css/facturacion-municipal.css">
+</head>
+<body><main id="pantalla-facturacion">
+  <header class="page-header page-header-with-link">
+    <div><p class="eyebrow">Facturación de medicamentos</p><h1>Nueva facturación municipal</h1></div>
+    <a id="inicio-facturacion" class="button button-secondary" href="/facturacion-municipal.html">Volver al listado</a>
+  </header>
+  <p id="contexto-facturacion"></p>
+  <p id="estado-facturacion" role="status" aria-live="polite"></p>
+  <p id="error-facturacion" class="operation-message message-error" role="alert" hidden></p>
+  <button id="recuperar-facturacion" class="button button-secondary" type="button" hidden>Consultar resultado pendiente</button>
+  <section id="paso-seleccion" class="panel paso" aria-labelledby="titulo-seleccion">
+    <h2 id="titulo-seleccion" tabindex="-1">1. Seleccionar Ayuntamiento y periodo</h2>
+    <p>Prepara las participaciones para revisarlas. Este paso guarda la revisión y todavía no emite facturas.</p>
+    <form id="formulario-seleccion">
+      <div class="form-grid">
+        <div class="form-field"><label for="ayuntamiento-facturacion">Ayuntamiento</label><select id="ayuntamiento-facturacion" required><option value="">Selecciona un Ayuntamiento</option></select></div>
+        <div class="form-field"><label for="periodo-facturacion">Periodo</label><select id="periodo-facturacion" required><option value="">Selecciona un periodo</option></select></div>
+      </div>
+      <div class="form-actions"><button id="preparar-facturacion" class="button button-primary" type="submit" disabled>Preparar revisión</button></div>
+    </form>
+    <button id="reintentar-catalogos" class="button button-secondary" type="button" hidden>Reintentar carga</button>
+  </section>
+  <section id="paso-revision" class="panel paso" aria-labelledby="titulo-revision" hidden>
+    <h2 id="titulo-revision" tabindex="-1">2. Revisar participaciones</h2>
+    <p>Puedes revisar y corregir los datos de la farmacia antes de la primera emisión. Después quedan fijados en la factura municipal.</p>
+    <p id="total-participaciones"></p>
+    <p id="advertencia-facturacion" role="status" hidden></p>
+    <div id="lista-participaciones"></div>
+    <div id="acciones-revision" class="form-actions">
+      <button id="volver-seleccion" class="button button-secondary" type="button">Cambiar selección</button>
+      <button id="recalcular-facturacion" class="button button-secondary" type="button">Recalcular participaciones</button>
+      <button id="continuar-emision" class="button button-primary" type="button">Revisar importes y números</button>
+    </div>
+    <form id="formulario-b" hidden>
+      <h3 id="titulo-b" tabindex="-1">Corregir farmacia</h3>
+      <div class="form-grid">
+        <div class="form-field"><label for="soe-b">SOE</label><input id="soe-b" type="text" maxlength="100" required></div>
+        <div class="form-field"><label for="cif-b">CIF</label><input id="cif-b" type="text" maxlength="50" required></div>
+        <div class="form-field form-field-wide"><label for="denominacion-b">Denominación</label><input id="denominacion-b" type="text" maxlength="250" required></div>
+      </div>
+      <div class="form-actions"><button id="cancelar-b" class="button button-secondary" type="button">Cancelar corrección</button><button id="guardar-b" class="button button-primary" type="submit">Guardar cambios</button></div>
+    </form>
+  </section>
+  <section id="paso-emision" class="panel paso" aria-labelledby="titulo-emision" hidden>
+    <h2 id="titulo-emision" tabindex="-1">3. Revisar y confirmar emisión conjunta</h2>
+    <div id="resumen-emision"></div>
+    <p>Los importes proceden de la previsualización del servidor. Se comprobarán de nuevo al emitir.</p>
+    <form id="formulario-emision">
+      <h3>Números oficiales de Contabilidad</h3>
+      <p>Introduce los números recibidos. Cada documento tiene su propia serie.</p>
+      <div class="form-grid">
+        <div class="form-field"><label for="numero-precintos">Número PRECINTOS</label><input id="numero-precintos" type="text" maxlength="200" required autocomplete="off"></div>
+        <div class="form-field"><label for="numero-comision">Número COMISIÓN</label><input id="numero-comision" type="text" maxlength="200" required autocomplete="off"></div>
+      </div>
+      <p id="nota-numeros" hidden>Se conservan los números originales y los datos de las farmacias de la facturación reabierta.</p>
+      <label class="confirmacion"><input id="confirmacion-emision" type="checkbox" required> He revisado los datos de las farmacias, los números oficiales y los importes de ambas facturas.</label>
+      <p>La confirmación emite ambas facturas juntas y fija los datos de las farmacias.</p>
+      <div class="form-actions"><button id="confirmar-emision" class="button button-primary" type="submit">Confirmar emisión conjunta</button></div>
+    </form>
+    <button id="reintentar-previa" class="button button-secondary" type="button" hidden>Revisar previsualización de nuevo</button>
+    <div class="form-actions"><button id="volver-revision" class="button button-secondary" type="button">Volver a participaciones</button></div>
+  </section>
+  <section id="paso-resultado" class="panel paso" aria-labelledby="titulo-resultado" hidden>
+    <h2 id="titulo-resultado" tabindex="-1">Emisión confirmada</h2>
+    <p>PRECINTOS y COMISIÓN emitidas. Los datos de las farmacias quedan fijados.</p>
+    <div id="facturas-emitidas"></div>
+    <p id="referencia-emitida"></p>
+    <a id="enlace-documentos" class="button button-secondary" href="/documentos-facturacion.html">Ver e imprimir documentos</a>
+    <a id="enlace-cobros" class="button button-primary" href="/cobros-municipales.html">Registrar cobros municipales</a>
+    <button id="otra-facturacion" class="button button-secondary" type="button">Seleccionar otra facturación</button>
+  </section>
+</main><script type="module" src="/js/facturacion-municipal.js"></script></body>
+</html>

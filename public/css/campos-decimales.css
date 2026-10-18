@@ -1,0 +1,27 @@
+.campo-monetario {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid #9aafc5;
+  border-radius: 0.35rem;
+  background: white;
+  min-width: 0;
+}
+.form-field .campo-monetario input {
+  flex: 1;
+  min-width: 0;
+  width: 0;
+  border: 0;
+  border-radius: 0.35rem 0 0 0.35rem;
+}
+.campo-monetario span {
+  display: flex;
+  align-items: center;
+  padding: 0 0.8rem;
+  border-left: 1px solid #d9e1ea;
+  color: #334155;
+}
+.campo-monetario:focus-within {
+  outline: 3px solid #2873b8;
+  outline-offset: 2px;
+}
+.form-field .campo-monetario input:focus-visible { outline: none; }

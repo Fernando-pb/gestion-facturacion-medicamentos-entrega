@@ -1,0 +1,10 @@
+.panel-configuracion-documentos {padding:1.5rem;}
+.panel-configuracion-documentos .form-grid {padding:0;}
+.panel-configuracion-documentos .form-actions {padding:0;margin-top:1.5rem;}
+.panel-configuracion-documentos [role="status"]:empty,
+.panel-configuracion-documentos [role="alert"]:empty {display:none;}
+.opciones-logo {gap:0.75rem;}
+.opciones-logo .quitar-logo {display:flex;align-items:center;gap:0.65rem;width:fit-content;cursor:pointer;}
+.opciones-logo input[type="checkbox"] {flex:0 0 auto;width:1.1rem;height:1.1rem;min-height:0;margin:0;padding:0;}
+#vista-logo {display:block;max-width:240px;max-height:100px;}
+@media(max-width:40rem) {.panel-configuracion-documentos {padding:1rem;}}

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Medicamentos</title>
+    <link rel="stylesheet" href="/css/ayuntamientos.css">
+    <script type="module" src="/js/medicamentos.js"></script>
+    <link rel="stylesheet" href="/css/campos-decimales.css">
+  </head>
+  <body>
+    <main>
+      <header class="page-header page-header-with-link">
+        <div>
+          <p class="eyebrow">Catálogo de medicamentos</p>
+          <h1>Medicamentos</h1>
+        </div>
+        <a id="volver-inicio" class="button button-secondary" href="/">Volver al inicio</a>
+      </header>
+
+      <p id="mensaje-operacion" class="operation-message" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+
+      <section id="seccion-formulario" class="panel form-panel" aria-labelledby="titulo-formulario" hidden>
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-formulario">Nuevo medicamento</h2>
+            <p>Completa los datos del medicamento.</p>
+          </div>
+        </div>
+        <p id="estado-formulario" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        <form id="formulario-medicamento">
+          <div class="form-grid">
+            <div class="medicamento-identificacion">
+              <div class="form-field">
+                <label for="campo-codigo-nacional">Código nacional <span aria-hidden="true">*</span></label>
+                <input id="campo-codigo-nacional" name="codigo_nacional" type="text" required>
+              </div>
+              <div class="form-field">
+                <label for="campo-descripcion">Descripción <span aria-hidden="true">*</span></label>
+                <input id="campo-descripcion" name="descripcion" type="text" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="campo-precio">Precio (euros) <span aria-hidden="true">*</span></label>
+              <div class="campo-monetario"><input id="campo-precio" name="precio" type="text" inputmode="decimal" pattern="[0-9]+([.,][0-9]{1,2})?" aria-describedby="ayuda-precio" required><span aria-hidden="true">€</span></div>
+              <small id="ayuda-precio">Coma o punto decimal, máximo dos decimales y 9999999999,99 euros. Sin separadores de miles.</small>
+            </div>
+            <div class="form-field">
+              <label for="campo-estado">Autorización general <span aria-hidden="true">*</span></label>
+              <select id="campo-estado" name="estado" required>
+                <option value="ACTIVO">Activo</option>
+                <option value="INACTIVO">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="campo-situacion-comercial">Situación comercial <span aria-hidden="true">*</span></label>
+              <select id="campo-situacion-comercial" name="situacion_comercial" required>
+                <option value="ALTA">Alta</option>
+                <option value="BAJA">Baja</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="campo-tipo-facturacion">Tipo de facturación <span aria-hidden="true">*</span></label>
+              <input id="campo-tipo-facturacion" name="tipo_facturacion" type="text" value="TD" readonly aria-describedby="ayuda-tipo-facturacion" required>
+              <small id="ayuda-tipo-facturacion">Valor fijo del MVP.</small>
+            </div>
+            <div class="form-field">
+              <label for="campo-grupo-terapeutico">Grupo terapéutico</label>
+              <input id="campo-grupo-terapeutico" name="grupo_terapeutico" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-codigo-laboratorio">Código de laboratorio</label>
+              <input id="campo-codigo-laboratorio" name="codigo_laboratorio" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-gtatc">GTATC</label>
+              <input id="campo-gtatc" name="gtatc" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-nombre-grupo">Nombre del grupo</label>
+              <input id="campo-nombre-grupo" name="nombre_grupo" type="text">
+            </div>
+            <div class="form-field form-field-wide">
+              <label for="campo-anexo">Anexo <span class="field-note">(opcional e informativo)</span></label>
+              <input id="campo-anexo" name="anexo" type="text">
+            </div>
+          </div>
+          <div class="form-actions">
+            <button id="guardar-medicamento" class="button button-primary" type="submit">Crear medicamento</button>
+            <button id="cancelar-formulario" class="button button-secondary" type="button">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="seccion-listado" class="panel" aria-labelledby="titulo-listado" aria-busy="true">
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-listado">Listado de medicamentos</h2>
+            <p class="section-description">Consulta y mantiene el catálogo actual.</p>
+          </div>
+          <div class="heading-actions">
+            <button id="nuevo-medicamento" class="button button-primary" type="button">Nuevo medicamento</button>
+            <button id="reintentar-listado" class="button button-secondary" type="button" hidden>Reintentar</button>
+          </div>
+        </div>
+        <p id="estado-listado" class="list-status" role="status" aria-live="polite" aria-atomic="true">Cargando medicamentos…</p>
+        <div class="table-scroll medicamentos-table-scroll">
+          <table id="tabla-medicamentos" class="medicamentos-table" role="table" hidden>
+            <caption class="visually-hidden">Medicamentos registrados</caption>
+            <thead role="rowgroup"><tr role="row">
+              <th scope="col" role="columnheader">Código nacional</th>
+              <th scope="col" role="columnheader">Descripción</th>
+              <th scope="col" role="columnheader">Precio</th>
+              <th scope="col" role="columnheader">Autorización general</th>
+              <th scope="col" role="columnheader">Situación comercial</th>
+              <th scope="col" role="columnheader">Tipo</th>
+              <th scope="col" role="columnheader">Acciones</th>
+            </tr></thead>
+            <tbody id="filas-medicamentos" role="rowgroup"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

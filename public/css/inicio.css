@@ -1,0 +1,91 @@
+/* Inicio puede ajustarse también a 320 px con la barra vertical visible. */
+body { min-width: 0; }
+
+.home-intro {
+  margin: 0.65rem 0 0;
+  color: #536579;
+}
+
+.home-panel {
+  padding-bottom: 1.5rem;
+}
+
+.home-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: .75rem;
+  margin: 0 1.5rem 1.5rem;
+}
+
+.home-tabs .button {
+  align-self: stretch;
+  min-width: 0;
+  min-height: 2.75rem;
+  justify-content: center;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.home-panel [role="tabpanel"]:focus-visible {
+  outline: 3px solid #1468b3;
+  outline-offset: -3px;
+}
+
+.home-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0;
+  padding: 0 1.5rem;
+  list-style: none;
+}
+
+.home-link {
+  display: flex;
+  min-height: 7rem;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.1rem;
+  border: 1px solid #9aafc5;
+  border-radius: 0.5rem;
+  background: #fff;
+  color: #173c63;
+  text-decoration: none;
+}
+
+.home-link:hover {
+  border-color: #174f7e;
+  background: #f5f9fd;
+}
+
+.home-link:focus-visible {
+  outline: 3px solid #1468b3;
+  outline-offset: 3px;
+}
+
+.home-link-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.home-link-description {
+  color: #536579;
+}
+
+@media (max-width: 40rem) {
+  .home-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+  .home-tabs .button {
+    padding: .65rem .5rem;
+    font-size: .875rem;
+  }
+  .home-links {
+    grid-template-columns: minmax(0, 1fr);
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}

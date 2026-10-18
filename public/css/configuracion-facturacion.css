@@ -1,0 +1,10 @@
+.panel-tasas {padding:1.5rem;margin-bottom:1.5rem;}
+.panel-tasas .form-grid {padding:0;}
+.panel-tasas .form-actions {padding:0;margin-top:1.5rem;gap:1rem;}
+.tabla-tasas {max-width:100%;overflow-x:auto;}
+.tabla-tasas table {min-width:650px;}
+.tabla-tasas th,.tabla-tasas td {width:auto!important;position:static!important;}
+#error-tasas {border:1px solid #c76565;background:#fff0f0;color:#7a1f1f;padding:1rem;}
+@media(max-width:40rem){.panel-tasas {padding:1rem;}}
+
+.panel-tasas h2[tabindex="-1"]:focus {outline:3px solid #1468b3;outline-offset:3px;}

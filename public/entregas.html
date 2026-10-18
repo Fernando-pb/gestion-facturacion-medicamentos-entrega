@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Entregas y precintos</title>
+  <link rel="stylesheet" href="/css/ayuntamientos.css">
+  <link rel="stylesheet" href="/css/entregas.css">
+  <script type="module" src="/js/entregas.js"></script>
+  <link rel="stylesheet" href="/css/campos-decimales.css">
+</head>
+<body class="entregas-page"><main>
+  <header class="page-header page-header-with-link"><div><p class="eyebrow">Control de entregas</p><h1>Entregas y precintos</h1></div><a id="volver-inicio" class="button button-secondary" href="/">Volver al inicio</a></header>
+  <p id="estado" class="operation-message" role="status" aria-live="polite" aria-atomic="true"></p>
+  <button id="consultar-guardado" class="button button-secondary" type="button" hidden>Consultar antes de repetir</button>
+  <section id="listado-entregas" class="panel" aria-labelledby="titulo-listado-entregas">
+    <div class="section-heading"><div><h2 id="titulo-listado-entregas" tabindex="-1">Entregas registradas</h2><p>Consulta una entrega para continuar su registro. La clasificación de facturación estará disponible cuando se implemente ese flujo.</p></div><button id="crear-entrega" class="button button-primary" type="button">Crear entrega nueva</button></div>
+    <div class="form-grid filtros-entregas-listado">
+      <div class="form-field"><label for="periodo-listado">Filtrar por periodo</label><select id="periodo-listado" required><option value="" disabled selected>Cargando periodos…</option></select></div>
+      <div class="form-field"><label for="ayuntamiento-listado">Filtrar por Ayuntamiento</label><select id="ayuntamiento-listado"><option value="">Todos los Ayuntamientos</option></select></div>
+    </div>
+    <div class="mensaje-listado"><p id="estado-listado" class="operation-message" role="status" aria-live="polite"></p><button id="actualizar-listado" class="button button-secondary" type="button" aria-describedby="estado-listado" hidden>Reintentar</button></div>
+    <div id="grupos-entregas"></div>
+  </section>
+  <section id="seleccion" class="panel form-panel" aria-labelledby="titulo-seleccion" hidden>
+    <div class="section-heading"><div><h2 id="titulo-seleccion" tabindex="-1">Crear entrega nueva</h2><p>Introduce los datos iniciales. No se guardan hasta pulsar «Crear entrega».</p></div><button id="cancelar-alta" class="button button-secondary" type="button">Volver al listado</button></div>
+    <form id="formulario-seleccion">
+      <div class="form-grid">
+        <div class="form-field"><label for="mes">Mes</label><select id="mes" required>
+          <option value="1">Enero</option><option value="2">Febrero</option><option value="3">Marzo</option><option value="4">Abril</option><option value="5">Mayo</option><option value="6">Junio</option><option value="7">Julio</option><option value="8">Agosto</option><option value="9">Septiembre</option><option value="10">Octubre</option><option value="11">Noviembre</option><option value="12">Diciembre</option>
+        </select></div>
+        <div class="form-field"><label for="anio">Año</label><input id="anio" type="number" min="1" max="2147483647" step="1" inputmode="numeric" required aria-describedby="aviso-periodo"></div>
+        <p id="aviso-periodo" class="form-field-wide">El periodo se crea al abrir la entrega si todavía no existe.</p>
+        <div class="form-field form-field-wide"><h3>Farmacia</h3><p id="farmacia-seleccionada" class="farmacia-seleccionada" hidden></p><p id="farmacia-vacia">Aún no has seleccionado una farmacia.</p><p id="aviso-ayuntamiento" class="informative-notice aviso-apertura" role="alert" hidden></p><button id="seleccionar-farmacia" class="button button-secondary" type="button">Seleccionar farmacia</button></div>
+        <div class="form-field"><label for="cantidad-inicial">Precintos declarados para una nueva entrega</label><input id="cantidad-inicial" inputmode="numeric" aria-describedby="ayuda-declarados"></div>
+        <div class="form-field"><label for="importe-inicial">Importe declarado para una nueva entrega (euros)</label><div class="campo-monetario"><input id="importe-inicial" inputmode="decimal" aria-describedby="ayuda-declarados"><span aria-hidden="true">€</span></div></div>
+        <p id="ayuda-declarados" class="form-field-wide">Vacío significa «Sin informar». Usa coma o punto decimal (12,34 o 12.34), hasta dos decimales y diez cifras enteras, sin separadores de miles. Si la entrega existe, se conservarán sus valores guardados.</p>
+      </div>
+      <div class="form-actions"><button id="abrir" class="button button-primary" type="submit" aria-describedby="aviso-ayuntamiento estado-apertura" disabled>Crear entrega</button></div>
+      <p id="estado-apertura" class="nota-entrega" role="status" aria-live="polite">Selecciona una farmacia con Ayuntamiento para abrir la entrega.</p>
+    </form>
+  </section>
+  <section id="selector-farmacias" class="panel form-panel" aria-labelledby="titulo-selector-farmacias" hidden>
+    <div class="section-heading"><div><h2 id="titulo-selector-farmacias" tabindex="-1">Seleccionar farmacia</h2><p>Busca por SOE o nombre y elige una farmacia para volver al alta.</p></div><button id="cancelar-selector-farmacias" class="button button-secondary" type="button">Cancelar búsqueda</button></div>
+    <div class="selector-farmacias-contenido">
+      <div class="form-field"><label for="busqueda">Buscar farmacia por SOE o nombre</label><input id="busqueda" type="search" autocomplete="off" maxlength="200" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="resultados-farmacias" aria-describedby="estado-busqueda"></div>
+      <p id="estado-busqueda" role="status" aria-live="polite">Escribe un SOE o nombre. Usa flechas y Enter para seleccionar.</p>
+      <ul id="resultados-farmacias" class="resultados-farmacias" role="listbox" aria-label="Farmacias encontradas" hidden></ul>
+      <button id="reintentar-carga" class="button button-secondary" type="button" hidden>Reintentar búsqueda</button>
+    </div>
+  </section>
+  <section id="detalle" class="panel form-panel" aria-labelledby="titulo-detalle" hidden>
+    <div class="section-heading"><div><h2 id="titulo-detalle" tabindex="-1">Detalle de entrega</h2><p id="contexto"></p></div><button id="volver-seleccion" class="button button-secondary" type="button">Volver al listado</button></div>
+    <section class="resumen-entrega" aria-labelledby="titulo-resumen-principal">
+      <h3 id="titulo-resumen-principal">Resumen de la entrega</h3>
+      <div><span>Precintos aptos</span><strong id="aptos-entrega">—</strong></div>
+      <div><span>Importe facturable</span><strong id="importe-entrega">—</strong></div>
+      <p id="estado-resumen" role="status" aria-live="polite"></p>
+      <button id="reintentar-resumen" class="button button-secondary" type="button" hidden>Reintentar</button>
+    </section>
+    <div class="form-actions"><button id="registrar-precintos" class="button button-primary" type="button">Registrar precintos</button></div>
+    <details id="control-entrega" class="control-entrega">
+      <summary>Información de control</summary>
+      <dl class="datos-entrega">
+        <div><dt>Nombre histórico de la farmacia</dt><dd id="nombre-historico"></dd></div>
+        <div><dt>CIF/NIF histórico</dt><dd id="cif-historico"></dd></div>
+        <div><dt>Precintos declarados</dt><dd id="cantidad-guardada"></dd></div>
+        <div><dt>Importe declarado (€)</dt><dd id="importe-guardado"></dd></div>
+      </dl>
+      <button id="editar" class="button button-secondary" type="button">Editar declarados</button>
+    <form id="formulario-declarados" hidden>
+      <div class="form-grid">
+        <div class="form-field"><label for="cantidad-editada">Precintos declarados</label><input id="cantidad-editada" inputmode="numeric" aria-describedby="ayuda-edicion"></div>
+        <div class="form-field"><label for="importe-editado">Importe declarado (euros)</label><div class="campo-monetario"><input id="importe-editado" inputmode="decimal" aria-describedby="ayuda-edicion"><span aria-hidden="true">€</span></div></div>
+        <p id="ayuda-edicion" class="form-field-wide">Vacío significa «Sin informar»; cero es un valor informado. Usa coma o punto decimal, hasta dos decimales y diez cifras enteras, sin separadores de miles. El servidor comprobará si la facturación permite guardar.</p>
+      </div>
+      <div class="form-actions"><button id="guardar" class="button button-primary" type="submit">Guardar declarados</button><button id="cancelar-edicion" class="button button-secondary" type="button">Cancelar edición</button></div>
+    </form>
+    <dl id="totales" class="datos-entrega"></dl>
+    <div id="tabla-paquetes" class="table-scroll" hidden><table><caption>Paquetes con precintos admitidos</caption><thead><tr><th scope="col">Paquete</th><th scope="col">Precintos</th><th scope="col">Subtotal (€)</th></tr></thead><tbody id="paquetes"></tbody></table></div>
+    <p id="sin-paquetes" class="nota-entrega" hidden>Todavía no hay precintos aptos en esta entrega</p>
+    </details>
+  </section>
+  <section id="lecturas" class="panel form-panel" aria-labelledby="titulo-lecturas" hidden>
+    <div class="cabecera-lecturas">
+    <div class="section-heading"><div><h2 id="titulo-lecturas" tabindex="-1">Registrar precintos</h2><p id="contexto-lecturas"></p></div><button id="volver-detalle" class="button button-secondary" type="button">Volver al detalle</button></div>
+    <div class="resumen-entrega resumen-principal" aria-live="polite" aria-atomic="true">
+      <div><span>Precintos aptos</span><strong id="aptos-lecturas">—</strong></div>
+      <div><span>Importe de precintos aptos</span><strong id="importe-lecturas">—</strong></div>
+      <p id="estado-totales-lecturas" role="status"></p>
+      <button id="reintentar-lecturas" class="button button-secondary" type="button" hidden>Reintentar</button>
+    </div>
+    </div>
+    <div class="informative-notice estado-precios"><strong>Estado de la facturación</strong><p id="estado-precios" role="status" aria-live="polite"></p><button id="reconsultar-precios" class="button button-secondary" type="button" hidden>Comprobar estado de la facturación</button></div>
+    <div id="lista-precintos" class="table-scroll lista-lecturas" tabindex="0" role="region" aria-label="Lista de precintos aptos"><table class="tabla-lecturas" role="table"><caption>Precintos aptos, por paquete y posición</caption><colgroup><col class="col-paquete"><col class="col-posicion"><col class="col-codigo"><col class="col-nacional"><col class="col-precio"><col class="col-acciones"></colgroup><thead role="rowgroup"><tr role="row"><th scope="col">Paquete</th><th scope="col">Posición</th><th scope="col">Código leído o escaneado (valor original)</th><th scope="col">Código nacional</th><th scope="col">Precio aplicado (€)</th><th scope="col">Acciones</th></tr></thead><tbody id="precintos-lecturas" role="rowgroup"></tbody></table></div>
+    <p id="sin-precintos-lecturas" class="nota-entrega" hidden></p>
+    <form id="formulario-precio" class="correccion-precio" hidden>
+      <h3 id="titulo-correccion-precio" tabindex="-1">Corrección excepcional del precio</h3>
+      <p id="alcance-precio"></p>
+      <p id="referencia-precio"></p>
+      <div class="form-field"><label for="precio-corregido">Nuevo precio aplicado (euros)</label><div class="campo-monetario"><input id="precio-corregido" inputmode="decimal" autocomplete="off" aria-describedby="ayuda-precio" required><span aria-hidden="true">€</span></div><p id="ayuda-precio">Coma o punto, hasta dos decimales, sin separadores de miles. Se conservará el precio de referencia de cada lectura.</p></div>
+      <label class="confirmacion-precio"><input id="confirmacion-precio" type="checkbox"> Confirmo corregir el precio de este precinto.</label>
+      <p id="mensaje-precio" class="operation-message" role="status" aria-live="polite" aria-atomic="true"></p>
+      <div class="form-actions"><button id="guardar-precio" type="submit" class="button button-primary">Guardar corrección</button><button id="cancelar-precio" type="button" class="button button-secondary">Cancelar</button><button id="consultar-precio" type="button" class="button button-secondary" hidden>Consultar resultado</button></div>
+    </form>
+    <form id="formulario-eliminar" class="correccion-precio" hidden>
+      <h3 id="titulo-eliminar" tabindex="-1">Eliminar precinto registrado por error</h3>
+      <p id="identidad-eliminar"></p>
+      <p>Se borrará únicamente esta lectura apta. Se actualizarán los totales y las posiciones de su paquete; los demás paquetes se conservarán.</p>
+      <label class="confirmacion-precio"><input id="confirmacion-eliminar" type="checkbox"> Confirmo eliminar este precinto registrado por error.</label>
+      <p id="mensaje-eliminar" class="operation-message" role="status" aria-live="polite" aria-atomic="true"></p>
+      <div class="form-actions"><button id="confirmar-eliminar" class="button button-primary" type="submit">Eliminar precinto</button><button id="cancelar-eliminar" class="button button-secondary" type="button">Cancelar</button><button id="consultar-eliminacion" class="button button-secondary" type="button" hidden>Consultar resultado</button></div>
+    </form>
+    <form id="formulario-lectura" class="entrada-lectura">
+      <div class="form-field"><label for="codigo-lectura">Código de barras o código nacional</label><input id="codigo-lectura" inputmode="numeric" autocomplete="off" aria-describedby="ayuda-lectura" required><p id="ayuda-lectura">Escanea o escribe el código y pulsa Enter</p></div>
+      <div class="form-actions"><button id="evaluar-lectura" class="button button-primary" type="submit">Evaluar y registrar</button></div>
+      <div class="paquete-control"><button id="nuevo-paquete-lectura" class="button button-secondary button-paquete" type="button" aria-pressed="false">Iniciar otro paquete con el próximo precinto apto</button><p id="estado-paquete-lectura" role="status" aria-live="polite"></p></div>
+    </form>
+    <p id="estado-lectura" class="operation-message" role="status" aria-live="polite" aria-atomic="true"></p>
+    <div id="decision-lectura" class="informative-notice" hidden><p id="resultado-lectura"></p><div class="form-actions">
+      <button id="confirmar-incidencia" class="button button-primary" type="button" hidden>Confirmar incidencia</button>
+      <button id="aceptar-baja" class="button button-primary" type="button" hidden>Aceptar precinto en BAJA</button>
+      <button id="apartar-baja" class="button button-secondary" type="button" hidden>Apartar como incidencia</button>
+      <button id="cancelar-lectura" class="button button-secondary" type="button">Cancelar esta lectura</button>
+    </div></div>
+    <div class="form-actions"><button id="consultar-operacion-lectura" class="button button-secondary" type="button" hidden>Consultar resultado de la operación</button><button id="repetir-operacion-lectura" class="button button-secondary" type="button" hidden>Repetir la misma operación</button></div>
+    <details class="detalles-lecturas"><summary>Ver más detalles: incidencias y controles</summary><dl id="controles-lecturas" class="datos-entrega"></dl><ul id="incidencias-lecturas"></ul><ul id="descripciones-lecturas" aria-label="Descripciones observadas en esta sesión"></ul><p>Las descripciones observadas proceden de la evaluación del catálogo en esta sesión; no son datos históricos guardados. Las lecturas anteriores pueden carecer de descripción. Los importes y posiciones proceden del servidor.</p></details>
+  </section>
+</main></body>
+</html>

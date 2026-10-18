@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Farmacias</title>
+    <link rel="stylesheet" href="/css/ayuntamientos.css">
+    <script type="module" src="/js/farmacias.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-header page-header-with-link">
+        <div>
+          <p class="eyebrow">Gestión de establecimientos</p>
+          <h1>Farmacias</h1>
+        </div>
+        <a id="volver-inicio" class="button button-secondary" href="/">Volver al inicio</a>
+      </header>
+
+      <p id="mensaje-operacion" class="operation-message" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+
+      <section id="seccion-formulario" class="panel form-panel" aria-labelledby="titulo-formulario" hidden>
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-formulario">Nueva farmacia</h2>
+            <p>Completa los datos de la farmacia y su ayuntamiento.</p>
+          </div>
+        </div>
+        <p id="estado-formulario" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+        <form id="formulario-farmacia">
+          <div class="form-grid">
+            <div class="form-field"><label for="campo-soe">SOE <span aria-hidden="true">*</span></label><input id="campo-soe" required></div>
+            <div class="form-field"><label for="campo-cif-nif">CIF/NIF <span aria-hidden="true">*</span></label><input id="campo-cif-nif" required></div>
+            <div class="form-field form-field-wide"><label for="campo-denominacion">Denominación <span aria-hidden="true">*</span></label><input id="campo-denominacion" required></div>
+            <div class="form-field form-field-wide"><label for="campo-direccion">Dirección <span aria-hidden="true">*</span></label><input id="campo-direccion" autocomplete="street-address" required></div>
+            <div class="form-field"><label for="campo-codigo-postal">Código postal <span aria-hidden="true">*</span></label><input id="campo-codigo-postal" autocomplete="postal-code" required></div>
+            <div class="form-field"><label for="campo-localidad">Localidad <span aria-hidden="true">*</span></label><input id="campo-localidad" required></div>
+            <div class="form-field"><label for="campo-provincia">Provincia <span aria-hidden="true">*</span></label><input id="campo-provincia" required></div>
+            <div class="form-field"><label for="campo-telefono">Teléfono</label><input id="campo-telefono" type="tel" autocomplete="tel"></div>
+            <div class="form-field form-field-wide"><label for="campo-ayuntamiento-id">Ayuntamiento asociado <span aria-hidden="true">*</span></label><select id="campo-ayuntamiento-id" required></select></div>
+            <div class="form-field"><label for="campo-pais-control-iban">País y control IBAN</label><input id="campo-pais-control-iban"></div>
+            <div class="form-field"><label for="campo-entidad-bancaria">Entidad bancaria</label><input id="campo-entidad-bancaria"></div>
+            <div class="form-field"><label for="campo-sucursal-bancaria">Sucursal bancaria</label><input id="campo-sucursal-bancaria"></div>
+            <div class="form-field"><label for="campo-digito-control-bancario">Dígito de control bancario</label><input id="campo-digito-control-bancario"></div>
+            <div class="form-field"><label for="campo-cuenta-bancaria">Cuenta bancaria</label><input id="campo-cuenta-bancaria"></div>
+          </div>
+          <div class="form-actions">
+            <button id="guardar-farmacia" class="button button-primary" type="submit">Crear farmacia</button>
+            <button id="cancelar-formulario" class="button button-secondary" type="button">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="seccion-listado" class="panel" aria-labelledby="titulo-listado" aria-busy="true">
+        <div class="section-heading">
+          <div><h2 id="titulo-listado">Listado de farmacias</h2><p class="section-description">Consulta las farmacias registradas y su ayuntamiento.</p></div>
+          <div class="heading-actions">
+            <button id="nuevo-farmacia" class="button button-primary" type="button">Nueva farmacia</button>
+            <button id="reintentar-listado" class="button button-secondary" type="button" hidden>Reintentar</button>
+          </div>
+        </div>
+        <p id="estado-listado" class="list-status" role="status" aria-live="polite" aria-atomic="true">Cargando farmacias…</p>
+        <div class="table-scroll">
+          <table id="tabla-farmacias" hidden>
+            <caption class="visually-hidden">Farmacias registradas y ayuntamientos asociados</caption>
+            <thead><tr><th scope="col">SOE</th><th scope="col">CIF/NIF</th><th scope="col">Denominación</th><th scope="col">Localidad</th><th scope="col">Provincia</th><th scope="col">Ayuntamiento</th><th scope="col">Acciones</th></tr></thead>
+            <tbody id="filas-farmacias"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

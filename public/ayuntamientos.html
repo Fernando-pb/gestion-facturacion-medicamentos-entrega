@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Gestión de Ayuntamientos</title>
+    <link rel="stylesheet" href="/css/ayuntamientos.css">
+    <script type="module" src="/js/ayuntamientos.js"></script>
+  </head>
+  <body>
+    <main>
+      <header class="page-header page-header-with-link">
+        <div>
+          <p class="eyebrow">Gestión municipal</p>
+          <h1>Ayuntamientos</h1>
+        </div>
+        <a id="volver-inicio" class="button button-secondary" href="/">Volver al inicio</a>
+      </header>
+
+      <p id="mensaje-operacion" class="operation-message" role="status" aria-live="polite" aria-atomic="true" hidden></p>
+
+      <section id="seccion-formulario" class="panel form-panel" aria-labelledby="titulo-formulario" hidden>
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-formulario">Nuevo ayuntamiento</h2>
+            <p>Completa los datos del ayuntamiento.</p>
+          </div>
+        </div>
+        <p id="estado-formulario" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+
+        <form id="formulario-ayuntamiento">
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="campo-cif">CIF <span aria-hidden="true">*</span></label>
+              <input id="campo-cif" name="cif" type="text" autocomplete="off" required>
+            </div>
+            <div class="form-field">
+              <label for="campo-denominacion">Denominación <span aria-hidden="true">*</span></label>
+              <input id="campo-denominacion" name="denominacion" type="text" required>
+            </div>
+            <div class="form-field form-field-wide">
+              <label for="campo-direccion">Dirección <span aria-hidden="true">*</span></label>
+              <input id="campo-direccion" name="direccion" type="text" autocomplete="street-address" required>
+            </div>
+            <div class="form-field">
+              <label for="campo-codigo-postal">Código postal <span aria-hidden="true">*</span></label>
+              <input id="campo-codigo-postal" name="codigo_postal" type="text" autocomplete="postal-code" required>
+            </div>
+            <div class="form-field">
+              <label for="campo-localidad">Localidad <span aria-hidden="true">*</span></label>
+              <input id="campo-localidad" name="localidad" type="text" autocomplete="address-level2" required>
+            </div>
+            <div class="form-field">
+              <label for="campo-provincia">Provincia <span aria-hidden="true">*</span></label>
+              <input id="campo-provincia" name="provincia" type="text" autocomplete="address-level1" required>
+            </div>
+            <div class="form-field">
+              <label for="campo-telefono">Teléfono</label>
+              <input id="campo-telefono" name="telefono" type="tel" autocomplete="tel">
+            </div>
+            <div class="form-field">
+              <label for="campo-movil">Móvil</label>
+              <input id="campo-movil" name="movil" type="tel" autocomplete="tel-national">
+            </div>
+            <div class="form-field">
+              <label for="campo-persona-responsable">Persona responsable</label>
+              <input id="campo-persona-responsable" name="persona_responsable" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-persona-contacto">Persona de contacto</label>
+              <input id="campo-persona-contacto" name="persona_contacto" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-alcalde">Alcalde o alcaldesa</label>
+              <input id="campo-alcalde" name="alcalde" type="text">
+            </div>
+            <div class="form-field">
+              <label for="campo-estado">Estado <span aria-hidden="true">*</span></label>
+              <select id="campo-estado" name="estado" required>
+                <option value="ACTIVO">Activo</option>
+                <option value="INACTIVO">Inactivo</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="campo-tipo-lista-medicamentos">Tipo de lista de medicamentos <span aria-hidden="true">*</span></label>
+              <select id="campo-tipo-lista-medicamentos" name="tipo_lista_medicamentos" required>
+                <option value="GENERAL">General</option>
+                <option value="ESPECIFICA">Específica</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="guardar-ayuntamiento" class="button button-primary" type="submit">Crear ayuntamiento</button>
+            <button id="cancelar-formulario" class="button button-secondary" type="button">Cancelar</button>
+          </div>
+        </form>
+      </section>
+
+      <section id="ficha-ayuntamiento" class="panel form-panel" aria-labelledby="titulo-ficha" hidden>
+        <div class="section-heading">
+          <div><h2 id="titulo-ficha">Ficha del Ayuntamiento</h2><p id="nombre-ficha" class="section-description"></p></div>
+          <button id="cerrar-ficha" class="button button-secondary" type="button">Volver al listado</button>
+        </div>
+        <div class="municipal-tabs" role="tablist" aria-label="Ficha del Ayuntamiento">
+          <button id="tab-datos" class="button button-secondary" type="button" role="tab" aria-selected="true" aria-controls="apartado-datos" tabindex="0">Datos</button>
+          <button id="tab-farmacias" class="button button-secondary" type="button" role="tab" aria-selected="false" aria-controls="apartado-farmacias" tabindex="-1">Farmacias</button>
+          <button id="tab-medicamentos" class="button button-secondary" type="button" role="tab" aria-selected="false" aria-controls="apartado-medicamentos" tabindex="-1">Medicamentos</button>
+        </div>
+        <section id="apartado-datos" role="tabpanel" aria-labelledby="tab-datos" tabindex="0">
+          <h2>Datos del Ayuntamiento</h2>
+          <p id="estado-datos-ficha" class="list-status" role="status" aria-live="polite"></p>
+          <button id="reintentar-datos" class="button button-secondary" type="button" hidden>Reintentar</button>
+          <dl id="datos-ficha" class="form-grid"></dl>
+          <button id="editar-modalidad" class="button button-primary" type="button">Editar Ayuntamiento</button>
+        </section>
+        <section id="apartado-medicamentos" role="tabpanel" aria-labelledby="tab-medicamentos" tabindex="0" hidden>
+          <div class="section-heading">
+            <div><h2 id="titulo-medicamentos-admitidos">Medicamentos admitidos</h2><details><summary>Ayuda sobre medicamentos</summary><p>Asociar un medicamento no implica que sea facturable. La autorización general y la situación comercial son condiciones independientes. La retirada conserva el medicamento en el catálogo.</p></details></div>
+</div>
+          <p id="modalidad-medicamentos" class="list-status" role="status" aria-live="polite"></p>
+          <p id="aviso-modalidad-medicamentos" class="informative-notice" role="status" aria-live="polite" hidden></p>
+          <section id="lista-medicamentos">
+          <button id="recargar-medicamentos" class="button button-secondary" type="button" hidden>Reintentar</button>
+          <p id="estado-medicamentos-admitidos" class="list-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <div class="table-scroll">
+            <table id="tabla-medicamentos-admitidos" class="municipal-table" hidden>
+              <caption class="visually-hidden">Lista específica de medicamentos del Ayuntamiento</caption>
+              <thead><tr><th scope="col">Código nacional</th><th scope="col">Descripción</th><th scope="col">Situación comercial</th><th scope="col">Estado general</th><th scope="col">Acciones</th></tr></thead>
+              <tbody id="filas-medicamentos-admitidos"></tbody>
+            </table>
+          </div>
+          <button id="abrir-busqueda-medicamentos" class="button button-primary" type="button" aria-expanded="false" aria-controls="panel-busqueda-medicamentos">Añadir medicamento</button>
+          </section>
+          <section id="panel-busqueda-medicamentos" class="municipal-task" aria-labelledby="titulo-busqueda-medicamentos" hidden>
+          <div class="section-heading"><h3 id="titulo-busqueda-medicamentos">Buscar un medicamento existente</h3><button id="cerrar-busqueda-medicamentos" class="button button-secondary" type="button">Cancelar</button></div>
+          <div id="resultados-medicamentos">
+          <form id="buscar-medicamentos">
+            <div class="form-grid">
+              <div class="form-field"><label for="medicamentos-campo">Buscar medicamento por</label><select id="medicamentos-campo"><option value="codigo_nacional">Código nacional</option><option value="descripcion">Descripción</option></select></div>
+              <div class="form-field"><label for="medicamentos-modo">Coincidencia del medicamento</label><select id="medicamentos-modo"><option value="exacto">Exacta</option><option value="prefijo">Empieza por</option><option value="contiene">Contiene</option></select></div>
+              <div class="form-field form-field-wide"><label for="medicamentos-q">Término del medicamento</label><input id="medicamentos-q" type="text" maxlength="200" required></div>
+            </div>
+            <div class="form-actions"><button id="buscar-medicamentos-boton" class="button button-primary" type="submit">Buscar medicamentos</button></div>
+          </form>
+          <p id="estado-busqueda-medicamentos" class="list-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <div class="table-scroll">
+            <table id="tabla-busqueda-medicamentos" class="municipal-table" hidden>
+              <caption class="visually-hidden">Resultados de búsqueda de medicamentos</caption>
+              <thead><tr><th scope="col">Código nacional</th><th scope="col">Descripción</th><th scope="col">Situación comercial</th><th scope="col">Estado general</th><th scope="col">Acciones</th></tr></thead>
+              <tbody id="filas-busqueda-medicamentos"></tbody>
+            </table>
+          </div>
+          </div>
+          <section id="seleccion-medicamentos" class="municipal-selection" aria-labelledby="titulo-seleccion-medicamentos" hidden>
+            <h3 id="titulo-seleccion-medicamentos">Medicamento seleccionado</h3>
+            <p id="texto-seleccion-medicamentos" tabindex="-1"></p>
+            <button id="accion-seleccion-medicamentos" class="button button-primary" type="button"></button>
+            <button id="volver-resultados-medicamentos" class="button button-secondary" type="button">Volver a resultados</button>
+          </section>
+          </section>
+          <p id="mensaje-medicamentos" tabindex="-1" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <section id="confirmacion-medicamento" class="confirmacion-farmacia" aria-labelledby="titulo-confirmacion-medicamento" hidden>
+            <h3 id="titulo-confirmacion-medicamento">Confirmar retirada de medicamento</h3>
+            <p id="texto-confirmacion-medicamento"></p>
+            <div class="heading-actions">
+              <button id="confirmar-medicamento" class="button button-primary" type="button">Confirmar retirada</button>
+              <button id="cancelar-medicamento" class="button button-secondary" type="button">Cancelar retirada</button>
+            </div>
+          </section>
+        </section>
+        <section id="apartado-farmacias" role="tabpanel" aria-labelledby="tab-farmacias" tabindex="0" hidden>
+          <div class="section-heading">
+            <div><h2 id="titulo-farmacias-asociadas">Farmacias asociadas</h2><details><summary>Ayuda sobre farmacias</summary><p>Asigna farmacias existentes o corrige su Ayuntamiento antes de que tengan entregas o precintos. Quitar la asignación conserva la farmacia sin Ayuntamiento. Las cuentas se muestran enmascaradas.</p></details></div>
+          </div>
+          <section id="lista-farmacias">
+          <button id="recargar-farmacias" class="button button-secondary" type="button" hidden>Reintentar</button>
+          <p id="estado-asociadas" class="list-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <div class="table-scroll">
+            <table id="tabla-asociadas" class="farmacias-municipales-table" hidden>
+              <caption class="visually-hidden">Farmacias asociadas al Ayuntamiento</caption>
+              <thead><tr><th scope="col">SOE</th><th scope="col">Denominación</th><th scope="col">Localidad</th><th scope="col">Cuenta enmascarada</th><th scope="col">Acciones</th></tr></thead>
+              <tbody id="filas-asociadas"></tbody>
+            </table>
+          </div>
+          <button id="abrir-busqueda-farmacias" class="button button-primary" type="button" aria-expanded="false" aria-controls="panel-busqueda-farmacias">Añadir farmacia</button>
+          </section>
+          <section id="panel-busqueda-farmacias" class="municipal-task" aria-labelledby="titulo-busqueda-farmacias" hidden>
+          <div class="section-heading"><h3 id="titulo-busqueda-farmacias">Buscar una farmacia existente</h3><button id="cerrar-busqueda-farmacias" class="button button-secondary" type="button">Cancelar</button></div>
+          <div id="resultados-farmacias">
+          <form id="buscar-farmacias">
+            <div class="form-grid">
+              <div class="form-field"><label for="farmacias-campo">Buscar por</label><select id="farmacias-campo"><option value="soe">SOE</option><option value="denominacion">Denominación</option></select></div>
+              <div class="form-field"><label for="farmacias-modo">Coincidencia</label><select id="farmacias-modo"><option value="exacto">Exacta</option><option value="prefijo">Empieza por</option><option value="contiene">Contiene</option></select></div>
+              <div class="form-field form-field-wide"><label for="farmacias-q">Término de búsqueda</label><input id="farmacias-q" type="text" maxlength="200" required></div>
+            </div>
+            <div class="form-actions"><button id="buscar-farmacias-boton" class="button button-primary" type="submit">Buscar</button></div>
+          </form>
+          <p id="estado-busqueda-farmacias" class="list-status" role="status" aria-live="polite" aria-atomic="true">Busca por SOE o denominación.</p>
+          <div class="table-scroll">
+            <table id="tabla-busqueda-farmacias" class="farmacias-municipales-table" hidden>
+              <caption class="visually-hidden">Resultados de búsqueda de Farmacias</caption>
+              <thead><tr><th scope="col">SOE</th><th scope="col">Denominación</th><th scope="col">Localidad</th><th scope="col">Cuenta enmascarada</th><th scope="col">Ayuntamiento actual</th><th scope="col">Acciones</th></tr></thead>
+              <tbody id="filas-busqueda-farmacias"></tbody>
+            </table>
+          </div>
+          </div>
+          </section>
+          <p id="mensaje-farmacias" tabindex="-1" class="form-status" role="status" aria-live="polite" aria-atomic="true"></p>
+          <section id="confirmacion-farmacia" class="confirmacion-farmacia" aria-labelledby="titulo-confirmacion-farmacia" hidden>
+            <h3 id="titulo-confirmacion-farmacia">Confirmar cambio de asignación</h3>
+            <p id="texto-confirmacion-farmacia"></p>
+            <div class="heading-actions">
+              <button id="confirmar-farmacia" class="button button-primary" type="button">Confirmar</button>
+              <button id="cancelar-farmacia" class="button button-secondary" type="button">Cancelar</button>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <section id="seccion-listado" class="panel" aria-labelledby="titulo-listado" aria-busy="true">
+        <div class="section-heading">
+          <div>
+            <h2 id="titulo-listado">Listado de ayuntamientos</h2>
+            <p class="section-description">Consulta los ayuntamientos registrados.</p>
+          </div>
+          <div class="heading-actions">
+            <button id="nuevo-ayuntamiento" class="button button-primary" type="button">
+              Nuevo ayuntamiento
+            </button>
+            <button id="reintentar-listado" class="button button-secondary" type="button" hidden>
+              Reintentar
+            </button>
+          </div>
+        </div>
+
+        <p id="estado-listado" class="list-status" role="status" aria-live="polite" aria-atomic="true">
+          Cargando ayuntamientos…
+        </p>
+
+        <div class="table-scroll">
+          <table id="tabla-ayuntamientos" hidden>
+            <caption class="visually-hidden">Ayuntamientos registrados</caption>
+            <thead>
+              <tr>
+                <th scope="col">CIF</th>
+                <th scope="col">Denominación</th>
+                <th scope="col">Localidad</th>
+                <th scope="col">Provincia</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Tipo de lista de medicamentos</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="filas-ayuntamientos"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

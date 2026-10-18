@@ -1,0 +1,26 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Documentos de facturación</title><link rel="stylesheet" href="/css/ayuntamientos.css"><link rel="stylesheet" href="/css/documentos.css"></head>
+<body><main><header class="page-header page-header-with-link"><h1>Documentos de facturación</h1><a id="volver-facturaciones" class="button button-secondary" href="/facturacion-municipal.html">Volver a Facturación municipal</a></header>
+<section id="contexto-documentos" class="panel controles-documentos" aria-label="Facturación consultada" hidden><h2>Facturación consultada</h2><p id="ayuntamiento-consultado"></p><p id="periodo-consultado"></p></section>
+<section id="consulta-ayuntamiento-periodo" class="panel controles-documentos" aria-labelledby="titulo-busqueda-documentos" hidden>
+  <h2 id="titulo-busqueda-documentos">1. Consultar facturación emitida</h2>
+  <p>Selecciona Ayuntamiento y periodo para abrir una facturación ya guardada. Esta consulta no emite ni recalcula facturas.</p>
+  <form id="busqueda-documentos">
+    <div class="form-grid">
+      <div class="form-field"><label for="ayuntamiento-documentos">Ayuntamiento</label><select id="ayuntamiento-documentos" required></select></div>
+      <div class="form-field"><label for="periodo-documentos">Periodo facturado</label><select id="periodo-documentos" required></select></div>
+    </div>
+    <div class="form-actions"><button id="buscar-documentos" class="button button-primary" disabled>Buscar facturación emitida</button><button id="reintentar-busqueda" type="button" class="button button-secondary" hidden>Reintentar carga de opciones</button></div>
+  </form>
+  <p id="estado-busqueda" role="status"></p><p id="error-busqueda" role="alert"></p>
+</section>
+<div class="form-actions controles-documentos"><a class="button button-secondary" href="/configuracion-documentos.html">Configurar logo y emisor</a></div>
+<p id="estado-documentos" role="status" class="controles-documentos"></p><p id="error-documentos" role="alert" class="controles-documentos"></p>
+<section id="seleccion-documentos" class="panel controles-documentos" hidden><h2>2. Elegir documento</h2><p>La impresión no registra cobros ni cambia la facturación.</p><div class="form-actions" id="opciones-documentos"><button class="button button-secondary" data-documento="precintos" aria-pressed="false">Factura de PRECINTOS</button><button class="button button-secondary" data-documento="comision" aria-pressed="false">Factura de GASTOS/COMISIÓN</button><button class="button button-secondary" data-documento="ambas" aria-pressed="false">Ambas facturas</button><button class="button button-secondary" data-documento="relacion" aria-pressed="false">Resumen global de precintos</button><button class="button button-secondary" data-documento="gastos" aria-pressed="false">Detalle global de gastos</button></div>
+  <div class="accion-impresion">
+    <h3>3. Imprimir o guardar como PDF</h3>
+    <p id="ayuda-impresion" role="status">Selecciona un documento arriba para habilitar la impresión.</p>
+    <p>Se abrirá la ventana de impresión del navegador. Elige una impresora o «Guardar como PDF» como destino. Antes de imprimir se consultan el logo y los datos actuales del emisor.</p>
+    <div class="form-actions"><button id="imprimir-documentos" type="button" class="button button-primary" aria-describedby="ayuda-impresion" disabled>Imprimir / Guardar como PDF</button></div>
+  </div>
+</section>
+<div id="vista-documentos" aria-live="polite"></div></main><script type="module" src="/js/documentos.js"></script><script type="module" src="/js/documentos-busqueda.js"></script></body></html>

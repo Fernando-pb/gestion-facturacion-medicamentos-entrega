@@ -1,0 +1,47 @@
+.paso { padding: 1.5rem; margin-bottom: 1.5rem; }
+.paso .form-grid, .paso .form-actions { padding: 0; }
+.paso .form-actions { margin-top: 1.5rem; gap: .75rem; flex-wrap: wrap; }
+.paso form, #resumen-emision, #lista-participaciones { margin-top: 1.5rem; }
+.paso h3 { margin-top: 1.5rem; }
+.paso table { min-width: 56rem; table-layout: auto; }
+.paso th:nth-child(n), .paso td:nth-child(n) { width: auto; white-space: normal; }
+.paso th:nth-child(3), .paso td:nth-child(3) { width: 30%; }
+.paso th:nth-child(1), .paso td:nth-child(1) { min-width: 4rem; }
+.paso th:nth-child(2), .paso td:nth-child(2) { min-width: 5rem; white-space: nowrap; }
+.paso th:nth-child(4), .paso td:nth-child(4) { min-width: 7rem; white-space: nowrap; }
+.paso th:nth-child(5), .paso td:nth-child(5) { min-width: 5rem; }
+.paso th:nth-child(6), .paso td:nth-child(6) { min-width: 6rem; }
+.paso th:nth-child(7), .paso td:nth-child(7) { min-width: 7rem; }
+.paso td, #contexto-facturacion { overflow-wrap: anywhere; }
+.paso .numero { text-align: right; white-space: nowrap; }
+.paso .tabla-facturaciones { min-width: 0; width: 100%; table-layout: fixed; }
+.paso .tabla-facturaciones th:nth-child(n), .paso .tabla-facturaciones td:nth-child(n) { min-width: 0; width: auto; white-space: normal; overflow-wrap: anywhere; }
+.paso .tabla-facturaciones th:nth-child(1), .paso .tabla-facturaciones td:nth-child(1) { width: 12%; }
+.paso .tabla-facturaciones th:nth-child(2), .paso .tabla-facturaciones td:nth-child(2) { width: 26%; }
+.paso .tabla-facturaciones th:nth-child(3), .paso .tabla-facturaciones td:nth-child(3) { width: 14%; }
+.paso .tabla-facturaciones th:nth-child(4), .paso .tabla-facturaciones td:nth-child(4) { width: 18%; }
+.paso .tabla-facturaciones th:nth-child(5), .paso .tabla-facturaciones td:nth-child(5) { width: 30%; }
+.tabla-facturaciones .acciones-facturacion .button { display: inline-flex; margin: .25rem 0; white-space: normal; max-width: 100%; }
+.acciones-facturacion p { margin: .5rem 0; }
+.tabla-facturaciones .estado-cobro { display: block; margin-top: .35rem; font-weight: 600; }
+.reapertura-facturacion { margin-top: 1.5rem; padding: 1rem; border: 1px solid #9aafc5; border-radius: .5rem; }
+.reapertura-facturacion textarea { width: 100%; max-width: 100%; box-sizing: border-box; font: inherit; padding: .5rem; }
+#contexto-reapertura, #estado-reapertura, #error-reapertura { overflow-wrap: anywhere; }
+.confirmacion { display: flex; align-items: flex-start; gap: .75rem; margin: 1.5rem 0; }
+.confirmacion input { width: auto; margin-top: .3rem; }
+#resumen-emision dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .75rem 1.5rem; }
+#resumen-emision dd { margin: 0; text-align: right; }
+#advertencia-facturacion { padding: 1rem; background: #fff4df; color: #713c00; }
+#recuperar-facturacion { margin-bottom: 1.5rem; }
+@media (max-width: 40rem) {
+  .tabla-facturaciones, .tabla-facturaciones tbody { display: block; }
+  .tabla-facturaciones thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .tabla-facturaciones tr { display: block; margin-bottom: 1rem; padding: .5rem; border: 1px solid #b6c3d0; border-radius: .4rem; }
+  .paso .tabla-facturaciones td:nth-child(n) { display: block; width: auto; padding: .5rem; white-space: normal; border: 0; }
+  .tabla-facturaciones td::before { content: attr(data-label); display: block; font-weight: 650; color: #40566d; }
+  .paso { padding: 1rem; }
+  .paso .form-grid { grid-template-columns: 1fr; }
+  .page-header-with-link { align-items: flex-start; flex-direction: column; }
+  #resumen-emision dl { grid-template-columns: 1fr; gap: .35rem; }
+  #resumen-emision dd { text-align: left; margin-bottom: .75rem; }
+}
